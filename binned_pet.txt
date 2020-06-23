@@ -1,0 +1,1449 @@
+b:Ts/PauseBeforeQuit="True"
+#i:Ts/NumberOfThreads = -1
+
+
+d:Ge/World/HLX       = 10. m
+d:Ge/World/HLY       = 10. m
+d:Ge/World/HLZ       = 10. m
+s:Ge/World/Material  = "Air"
+b:Ge/World/Invisible = "True"
+
+
+
+
+s:Ge/Target/Type="TsSphere"
+#s:Ge/Target/Parent="World"
+s:Ge/Target/Material="Air"
+d:Ge/Target/RMax=5.0 cm
+d:Ge/Target/RMin=4.0 cm
+d:Ge/Target/TransX = 0 m
+d:Ge/Target/TransY = 0 m
+d:Ge/Target/TransZ = 0 m
+
+
+
+
+s:Ge/Target1/Type="TsSphere"
+#s:Ge/Target1/Parent="World"
+s:Ge/Target1/Material="Air"
+d:Ge/Target1/RMax=5.0 cm
+d:Ge/Target1/RMin=4.0 cm
+d:Ge/Target1/TransX = 1 m
+d:Ge/Target1/TransY = 0 m
+d:Ge/Target1/TransZ = 0 m
+s:Ge/Target1/Color = "Blue"
+
+s:Ge/Target2/Type="TsSphere"
+#s:Ge/Target2/Parent="World"
+s:Ge/Target2/Material="Air"
+d:Ge/Target2/RMax=5.0 cm
+d:Ge/Target2/RMin=4.0 cm
+d:Ge/Target2/TransX = 0 m
+d:Ge/Target2/TransY = 0 m
+d:Ge/Target2/TransZ = 1 m
+s:Ge/Target2/Color = "Red"
+
+s:Ge/Target3/Type="TsSphere"
+#s:Ge/Target3/Parent="World"
+s:Ge/Target3/Material="Air"
+d:Ge/Target3/RMax=5.0 cm
+d:Ge/Target3/RMin=4.0 cm
+d:Ge/Target3/TransX = 0 m
+d:Ge/Target3/TransY = 1 m
+d:Ge/Target3/TransZ = 0 m
+s:Ge/Target3/Color = "Green"
+
+
+#=====Phantom=====
+s:Ge/Phantom/Type="TsCylinder"
+#s:Ge/Phantom/Parent="World"
+s:Ge/Phantom/Material="G4_WATER"
+d:Ge/Phantom/RMax=41.0 cm
+d:Ge/Phantom/RMin=0 cm
+d:Ge/Phantom/HL=87.7 cm
+d:Ge/Phantom/TransX = 0 m
+d:Ge/Phantom/TransY = 0 m
+d:Ge/Phantom/TransZ = 0 m
+s:Ge/Phantom/Color = "Pink"
+
+
+
+#============Graphics=============================
+
+
+b:Gr/ViewA/Active = "True"
+
+s:Gr/ViewA/Type                             = "OpenGL"
+i:Gr/ViewA/WindowSizeX                      = 1024
+i:Gr/ViewA/WindowSizeY                      = 768
+d:Gr/ViewA/Theta                            = 55 deg
+d:Gr/ViewA/Phi                              = 20 deg
+u:Gr/ViewA/Zoom                             = 1.3
+b:Gr/ViewA/HiddenLineRemovalForTrajectories = "True"
+s:Gr/ViewA/Projection                       = "Perspective"
+d:Gr/ViewA/PerspectiveAngle                 = 30 deg
+b:Gr/ViewA/CopyOpenGLToEPS                  = "False"
+
+#sv:Ph/Default/Modules = 1 "g4em-standard_opt0"
+
+
+
+
+d:Tf/TimelineStart = 0. s # defaults to zero
+d:Tf/TimelineEnd = 300000. ns # must be larger than TimelineStart
+i:Tf/NumberOfSequentialTimes = 300000 # defaults to 1
+
+s:Tf/coschange/Function            = "Linear"
+d:Tf/coschange/Rate                = .05 1/s
+u:Tf/coschange/StartValue          = 0
+d:Tf/coschange/RepetitionInterval  = 1000 s
+
+#=============Physics=====================
+
+
+s:Ph/ListName         = "Optical"
+s:Ph/Optical/Type     = "Geant4_Modular"
+sv:Ph/Optical/Modules = 2 "g4em-standard_opt3" "g4optical"
+
+#=============Materials====================
+
+
+#=====BGO crystal============
+
+sv:Ma/BGO/Components=4 "Carbon" "Nitrogen" "Oxygen" "Argon" # names of elements
+uv:Ma/BGO/Fractions=4 0.000124 0.755268 0.231781 0.012827 # fractions of elements
+d:Ma/BGO/Density=7.13 g/cm3
+d:Ma/BGO/MeanExcitationEnergy= 	534.1 eV
+s:Ma/BGO/DefaultColor="pink"
+#s:Ma/BGO/State = "Solid"
+dv:Ma/BGO/RefractiveIndex/Energies = 1 2.0 eV
+uv:Ma/BGO/RefractiveIndex/Values = 1 2.150
+
+
+
+#=====================Sources============================
+
+
+s:Ge/BeamPosition1/Parent="World"
+s:Ge/BeamPosition1/Type="Group"
+d:Ge/BeamPosition1/TransX=0. cm
+d:Ge/BeamPosition1/TransY=10. cm
+d:Ge/BeamPosition1/TransZ= 0 m
+d:Ge/BeamPosition1/RotX=0. deg
+d:Ge/BeamPosition1/RotY=0. deg
+d:Ge/BeamPosition1/RotZ=0. deg
+
+
+
+s:So/PointSource1/Type                     = "ParallelPhotonBeamGenerator"
+s:So/PointSource1/Component                = "BeamPosition1"
+s:So/PointSource1/BeamParticle             = "gamma"
+d:So/PointSource1/BeamEnergy               = 511 keV
+u:So/PointSource1/BeamEnergySpread         = 0.757504
+#s:So/PointSource1/BeamPositionDistribution = "Gaussian"
+#s:So/PointSource1/BeamPositionCutoffShape  = "Ellipse"
+#d:So/PointSource1/BeamPositionCutoffX      = 10. cm
+#d:So/PointSource1/BeamPositionCutoffY      = 10. cm
+#d:So/PointSource1/BeamPositionSpreadX      = 0.65 cm
+#d:So/PointSource1/BeamPositionSpreadY      = 0.65 cm
+#s:So/PointSource1/BeamAngularDistribution  = "Gaussian"
+#d:So/PointSource1/BeamAngularCutoffX       = 90. deg
+#d:So/PointSource1/BeamAngularCutoffY       = 90. deg
+#d:So/PointSource1/BeamAngularSpreadX       = 0.0032 rad
+#d:So/PointSource1/BeamAngularSpreadY       = 0.0032 rad
+i:So/PointSource1/NumberOfHistoriesInRun    = 1
+i:So/PointSource1/SplitNumber               = 50
+#d:So/PointSource1/RotY                     = Tf/InnerBoxStep/Value deg
+d:So/PointSource1/AngleError                = .5 deg
+#d:So/PointSource1/TransX       = 0. m
+#d:So/PointSource1/TransY       = 38. cm
+#d:So/PointSource1/TransZ       = 0. m
+u:So/PointSource1/DCos1 = 1
+u:So/PointSource1/DCos2 = Tf/coschange/Value
+u:So/PointSource1/DCos3 = 1
+d:So/PointSource1/MeanPositronRange = 1.4 mm
+
+
+
+s:Ge/BeamPosition2/Parent="World"
+s:Ge/BeamPosition2/Type="Group"
+d:Ge/BeamPosition2/TransX=30. cm
+d:Ge/BeamPosition2/TransY=0. m
+d:Ge/BeamPosition2/TransZ= 0 m
+d:Ge/BeamPosition2/RotX=0. deg
+d:Ge/BeamPosition2/RotY=0. deg
+d:Ge/BeamPosition2/RotZ=0. deg
+
+
+
+s:So/PointSource2/Type                     = "ParallelPhotonBeamGenerator"
+s:So/PointSource2/Component                = "BeamPosition2"
+s:So/PointSource2/BeamParticle             = "gamma"
+d:So/PointSource2/BeamEnergy               = 511 keV
+u:So/PointSource2/BeamEnergySpread         = 0.757504
+#s:So/PointSource2/BeamPositionDistribution = "Gaussian"
+#s:So/PointSource2/BeamPositionCutoffShape  = "Ellipse"
+#d:So/PointSource2/BeamPositionCutoffX      = 10. cm
+#d:So/PointSource2/BeamPositionCutoffY      = 10. cm
+#d:So/PointSource2/BeamPositionSpreadX      = 0.65 cm
+#d:So/PointSource2/BeamPositionSpreadY      = 0.65 cm
+#s:So/PointSource2/BeamAngularDistribution  = "Gaussian"
+#d:So/PointSource2/BeamAngularCutoffX       = 90. deg
+#d:So/PointSource2/BeamAngularCutoffY       = 90. deg
+#d:So/PointSource2/BeamAngularSpreadX       = 0.0032 rad
+#d:So/PointSource2/BeamAngularSpreadY       = 0.0032 rad
+i:So/PointSource2/NumberOfHistoriesInRun    = 1
+i:So/PointSource2/SplitNumber               = 50
+#d:So/PointSource2/RotY                     = Tf/InnerBoxStep/Value deg
+d:So/PointSource2/AngleError                = .5 deg
+#d:So/PointSource2/TransX       = 38. cm
+#d:So/PointSource2/TransY       = 0. m
+#d:So/PointSource2/TransZ       = 0. m
+u:So/PointSource2/DCos1 = 1
+u:So/PointSource2/DCos2 = Tf/coschange/Value
+u:So/PointSource2/DCos3 = 1
+d:So/PointSource2/MeanPositronRange = 1.4 mm
+
+#=============Scorer/Detector==========================
+
+#========Geometry============
+
+s:Ge/PETScannerRing/Type="Group"
+s:Ge/PETScannerRing/Parent = "World"
+d:Ge/PETScannerRing/TransX=2. m
+d:Ge/PETScannerRing/TransY=2. m
+d:Ge/PETScannerRing/TransZ=0. m
+d:Ge/PETScannerRing/RotX=0. deg
+d:Ge/PETScannerRing/RotY=0. deg
+d:Ge/PETScannerRing/RotZ=0. deg
+i:Ge/PETScannerRing/NumBlocks = 200
+
+
+s:Ge/CrystalGroup1/Type="Group"
+s:Ge/CrystalGroup1/Parent = "PETScannerRing"
+d:Ge/CrystalGroup1/TransX=2. m
+d:Ge/CrystalGroup1/TransY=2. m
+d:Ge/CrystalGroup1/TransZ=0. m
+d:Ge/CrystalGroup1/RotX=0. deg
+d:Ge/CrystalGroup1/RotY=0. deg
+d:Ge/CrystalGroup1/RotZ=0. deg
+d:Ge/CrystalGroup1/MarginHoriz = .5 mm #made up number
+d:Ge/CrystalGroup1/MarginVert = .5 mm #made up number
+i:Ge/CrystalGroup1/CrystalsHoriz = 8
+i:Ge/CrystalGroup1/CrystalsVert  = 8
+u:Ge/CrystalGroup1/NegHalfCrystalsHoriz  = -.5 * Ge/CrystalGroup/CrystalsHoriz
+u:Ge/CrystalGroup1/NegHalfCrystalsVert   = -.5 * Ge/CrystalGroup/CrystalsHoriz
+u:Ge/CrystalGroup1/FirstPosHoriz  = Ge/CrystalGroup/NegHalfCrystalsHoriz + .5
+u:Ge/CrystalGroup1/FirstPosVert   = Ge/CrystalGroup/NegHalfCrystalsVert  + .5
+d:Ge/CrystalGroup1/CrystalHLX = .5 * Ge/CrystalGroup/CrystalLX mm
+d:Ge/CrystalGroup1/CrystalHLY = .5 * Ge/CrystalGroup/CrystalLY mm
+d:Ge/CrystalGroup1/CrystalHLZ = .5 * Ge/CrystalGroup/CrystalLZ mm
+d:Ge/CrystalGroup1/CrystalLX = 4.05 mm
+d:Ge/CrystalGroup1/CrystalLY = 4.39 mm
+d:Ge/CrystalGroup1/CrystalLZ = 30 mm
+d:Ge/CrystalGroup1/DeltaX = Ge/CrystalGroup/CrystalLX + Ge/CrystalGroup/MarginVert mm
+d:Ge/CrystalGroup1/DeltaY = Ge/CrystalGroup/CrystalLY + Ge/CrystalGroup/MarginHoriz mm
+s:Ge/CrystalGroup1/CrystalMaterial = "BGO"
+
+
+s:Ge/Crystal1r0c0/Type                    = "TsBox"
+s:Ge/Crystal1r0c0/Parent                  = "World"
+s:Ge/Crystal1r0c0/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r0c0/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r0c0/VertOffset
+d:Ge/Crystal1r0c0/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r0c0/HorizOffset
+d:Ge/Crystal1r0c0/TransZ                  = 0 cm
+d:Ge/Crystal1r0c0/RotX                    = 0 deg
+d:Ge/Crystal1r0c0/RotY                    = 0 deg
+d:Ge/Crystal1r0c0/RotZ                    = 0 deg
+d:Ge/Crystal1r0c0/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r0c0/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r0c0/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r0c0/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 0
+u:Ge/Crystal1r0c0/VertOffset              = Ge/CrystalGroup/FirstPosVert + 0
+
+
+
+
+s:Ge/Crystal1r0c1/Type                    = "TsBox"
+s:Ge/Crystal1r0c1/Parent                  = "World"
+s:Ge/Crystal1r0c1/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r0c1/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r0c1/VertOffset
+d:Ge/Crystal1r0c1/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r0c1/HorizOffset
+d:Ge/Crystal1r0c1/TransZ                  = 0 cm
+d:Ge/Crystal1r0c1/RotX                    = 0 deg
+d:Ge/Crystal1r0c1/RotY                    = 0 deg
+d:Ge/Crystal1r0c1/RotZ                    = 0 deg
+d:Ge/Crystal1r0c1/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r0c1/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r0c1/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r0c1/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 1
+u:Ge/Crystal1r0c1/VertOffset              = Ge/CrystalGroup/FirstPosVert + 0
+
+
+
+
+s:Ge/Crystal1r0c2/Type                    = "TsBox"
+s:Ge/Crystal1r0c2/Parent                  = "World"
+s:Ge/Crystal1r0c2/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r0c2/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r0c2/VertOffset
+d:Ge/Crystal1r0c2/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r0c2/HorizOffset
+d:Ge/Crystal1r0c2/TransZ                  = 0 cm
+d:Ge/Crystal1r0c2/RotX                    = 0 deg
+d:Ge/Crystal1r0c2/RotY                    = 0 deg
+d:Ge/Crystal1r0c2/RotZ                    = 0 deg
+d:Ge/Crystal1r0c2/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r0c2/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r0c2/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r0c2/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 2
+u:Ge/Crystal1r0c2/VertOffset              = Ge/CrystalGroup/FirstPosVert + 0
+
+
+
+
+s:Ge/Crystal1r0c3/Type                    = "TsBox"
+s:Ge/Crystal1r0c3/Parent                  = "World"
+s:Ge/Crystal1r0c3/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r0c3/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r0c3/VertOffset
+d:Ge/Crystal1r0c3/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r0c3/HorizOffset
+d:Ge/Crystal1r0c3/TransZ                  = 0 cm
+d:Ge/Crystal1r0c3/RotX                    = 0 deg
+d:Ge/Crystal1r0c3/RotY                    = 0 deg
+d:Ge/Crystal1r0c3/RotZ                    = 0 deg
+d:Ge/Crystal1r0c3/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r0c3/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r0c3/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r0c3/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 3
+u:Ge/Crystal1r0c3/VertOffset              = Ge/CrystalGroup/FirstPosVert + 0
+
+
+
+
+s:Ge/Crystal1r0c4/Type                    = "TsBox"
+s:Ge/Crystal1r0c4/Parent                  = "World"
+s:Ge/Crystal1r0c4/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r0c4/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r0c4/VertOffset
+d:Ge/Crystal1r0c4/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r0c4/HorizOffset
+d:Ge/Crystal1r0c4/TransZ                  = 0 cm
+d:Ge/Crystal1r0c4/RotX                    = 0 deg
+d:Ge/Crystal1r0c4/RotY                    = 0 deg
+d:Ge/Crystal1r0c4/RotZ                    = 0 deg
+d:Ge/Crystal1r0c4/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r0c4/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r0c4/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r0c4/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 4
+u:Ge/Crystal1r0c4/VertOffset              = Ge/CrystalGroup/FirstPosVert + 0
+
+
+
+
+s:Ge/Crystal1r0c5/Type                    = "TsBox"
+s:Ge/Crystal1r0c5/Parent                  = "World"
+s:Ge/Crystal1r0c5/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r0c5/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r0c5/VertOffset
+d:Ge/Crystal1r0c5/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r0c5/HorizOffset
+d:Ge/Crystal1r0c5/TransZ                  = 0 cm
+d:Ge/Crystal1r0c5/RotX                    = 0 deg
+d:Ge/Crystal1r0c5/RotY                    = 0 deg
+d:Ge/Crystal1r0c5/RotZ                    = 0 deg
+d:Ge/Crystal1r0c5/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r0c5/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r0c5/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r0c5/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 5
+u:Ge/Crystal1r0c5/VertOffset              = Ge/CrystalGroup/FirstPosVert + 0
+
+
+
+
+s:Ge/Crystal1r0c6/Type                    = "TsBox"
+s:Ge/Crystal1r0c6/Parent                  = "World"
+s:Ge/Crystal1r0c6/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r0c6/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r0c6/VertOffset
+d:Ge/Crystal1r0c6/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r0c6/HorizOffset
+d:Ge/Crystal1r0c6/TransZ                  = 0 cm
+d:Ge/Crystal1r0c6/RotX                    = 0 deg
+d:Ge/Crystal1r0c6/RotY                    = 0 deg
+d:Ge/Crystal1r0c6/RotZ                    = 0 deg
+d:Ge/Crystal1r0c6/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r0c6/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r0c6/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r0c6/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 6
+u:Ge/Crystal1r0c6/VertOffset              = Ge/CrystalGroup/FirstPosVert + 0
+
+
+
+
+s:Ge/Crystal1r0c7/Type                    = "TsBox"
+s:Ge/Crystal1r0c7/Parent                  = "World"
+s:Ge/Crystal1r0c7/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r0c7/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r0c7/VertOffset
+d:Ge/Crystal1r0c7/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r0c7/HorizOffset
+d:Ge/Crystal1r0c7/TransZ                  = 0 cm
+d:Ge/Crystal1r0c7/RotX                    = 0 deg
+d:Ge/Crystal1r0c7/RotY                    = 0 deg
+d:Ge/Crystal1r0c7/RotZ                    = 0 deg
+d:Ge/Crystal1r0c7/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r0c7/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r0c7/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r0c7/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 7
+u:Ge/Crystal1r0c7/VertOffset              = Ge/CrystalGroup/FirstPosVert + 0
+
+
+
+
+s:Ge/Crystal1r1c0/Type                    = "TsBox"
+s:Ge/Crystal1r1c0/Parent                  = "World"
+s:Ge/Crystal1r1c0/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r1c0/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r1c0/VertOffset
+d:Ge/Crystal1r1c0/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r1c0/HorizOffset
+d:Ge/Crystal1r1c0/TransZ                  = 0 cm
+d:Ge/Crystal1r1c0/RotX                    = 0 deg
+d:Ge/Crystal1r1c0/RotY                    = 0 deg
+d:Ge/Crystal1r1c0/RotZ                    = 0 deg
+d:Ge/Crystal1r1c0/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r1c0/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r1c0/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r1c0/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 0
+u:Ge/Crystal1r1c0/VertOffset              = Ge/CrystalGroup/FirstPosVert + 1
+
+
+
+
+s:Ge/Crystal1r1c1/Type                    = "TsBox"
+s:Ge/Crystal1r1c1/Parent                  = "World"
+s:Ge/Crystal1r1c1/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r1c1/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r1c1/VertOffset
+d:Ge/Crystal1r1c1/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r1c1/HorizOffset
+d:Ge/Crystal1r1c1/TransZ                  = 0 cm
+d:Ge/Crystal1r1c1/RotX                    = 0 deg
+d:Ge/Crystal1r1c1/RotY                    = 0 deg
+d:Ge/Crystal1r1c1/RotZ                    = 0 deg
+d:Ge/Crystal1r1c1/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r1c1/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r1c1/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r1c1/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 1
+u:Ge/Crystal1r1c1/VertOffset              = Ge/CrystalGroup/FirstPosVert + 1
+
+
+
+
+s:Ge/Crystal1r1c2/Type                    = "TsBox"
+s:Ge/Crystal1r1c2/Parent                  = "World"
+s:Ge/Crystal1r1c2/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r1c2/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r1c2/VertOffset
+d:Ge/Crystal1r1c2/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r1c2/HorizOffset
+d:Ge/Crystal1r1c2/TransZ                  = 0 cm
+d:Ge/Crystal1r1c2/RotX                    = 0 deg
+d:Ge/Crystal1r1c2/RotY                    = 0 deg
+d:Ge/Crystal1r1c2/RotZ                    = 0 deg
+d:Ge/Crystal1r1c2/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r1c2/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r1c2/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r1c2/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 2
+u:Ge/Crystal1r1c2/VertOffset              = Ge/CrystalGroup/FirstPosVert + 1
+
+
+
+
+s:Ge/Crystal1r1c3/Type                    = "TsBox"
+s:Ge/Crystal1r1c3/Parent                  = "World"
+s:Ge/Crystal1r1c3/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r1c3/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r1c3/VertOffset
+d:Ge/Crystal1r1c3/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r1c3/HorizOffset
+d:Ge/Crystal1r1c3/TransZ                  = 0 cm
+d:Ge/Crystal1r1c3/RotX                    = 0 deg
+d:Ge/Crystal1r1c3/RotY                    = 0 deg
+d:Ge/Crystal1r1c3/RotZ                    = 0 deg
+d:Ge/Crystal1r1c3/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r1c3/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r1c3/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r1c3/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 3
+u:Ge/Crystal1r1c3/VertOffset              = Ge/CrystalGroup/FirstPosVert + 1
+
+
+
+
+s:Ge/Crystal1r1c4/Type                    = "TsBox"
+s:Ge/Crystal1r1c4/Parent                  = "World"
+s:Ge/Crystal1r1c4/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r1c4/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r1c4/VertOffset
+d:Ge/Crystal1r1c4/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r1c4/HorizOffset
+d:Ge/Crystal1r1c4/TransZ                  = 0 cm
+d:Ge/Crystal1r1c4/RotX                    = 0 deg
+d:Ge/Crystal1r1c4/RotY                    = 0 deg
+d:Ge/Crystal1r1c4/RotZ                    = 0 deg
+d:Ge/Crystal1r1c4/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r1c4/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r1c4/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r1c4/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 4
+u:Ge/Crystal1r1c4/VertOffset              = Ge/CrystalGroup/FirstPosVert + 1
+
+
+
+
+s:Ge/Crystal1r1c5/Type                    = "TsBox"
+s:Ge/Crystal1r1c5/Parent                  = "World"
+s:Ge/Crystal1r1c5/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r1c5/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r1c5/VertOffset
+d:Ge/Crystal1r1c5/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r1c5/HorizOffset
+d:Ge/Crystal1r1c5/TransZ                  = 0 cm
+d:Ge/Crystal1r1c5/RotX                    = 0 deg
+d:Ge/Crystal1r1c5/RotY                    = 0 deg
+d:Ge/Crystal1r1c5/RotZ                    = 0 deg
+d:Ge/Crystal1r1c5/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r1c5/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r1c5/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r1c5/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 5
+u:Ge/Crystal1r1c5/VertOffset              = Ge/CrystalGroup/FirstPosVert + 1
+
+
+
+
+s:Ge/Crystal1r1c6/Type                    = "TsBox"
+s:Ge/Crystal1r1c6/Parent                  = "World"
+s:Ge/Crystal1r1c6/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r1c6/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r1c6/VertOffset
+d:Ge/Crystal1r1c6/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r1c6/HorizOffset
+d:Ge/Crystal1r1c6/TransZ                  = 0 cm
+d:Ge/Crystal1r1c6/RotX                    = 0 deg
+d:Ge/Crystal1r1c6/RotY                    = 0 deg
+d:Ge/Crystal1r1c6/RotZ                    = 0 deg
+d:Ge/Crystal1r1c6/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r1c6/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r1c6/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r1c6/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 6
+u:Ge/Crystal1r1c6/VertOffset              = Ge/CrystalGroup/FirstPosVert + 1
+
+
+
+
+s:Ge/Crystal1r1c7/Type                    = "TsBox"
+s:Ge/Crystal1r1c7/Parent                  = "World"
+s:Ge/Crystal1r1c7/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r1c7/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r1c7/VertOffset
+d:Ge/Crystal1r1c7/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r1c7/HorizOffset
+d:Ge/Crystal1r1c7/TransZ                  = 0 cm
+d:Ge/Crystal1r1c7/RotX                    = 0 deg
+d:Ge/Crystal1r1c7/RotY                    = 0 deg
+d:Ge/Crystal1r1c7/RotZ                    = 0 deg
+d:Ge/Crystal1r1c7/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r1c7/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r1c7/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r1c7/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 7
+u:Ge/Crystal1r1c7/VertOffset              = Ge/CrystalGroup/FirstPosVert + 1
+
+
+
+
+s:Ge/Crystal1r2c0/Type                    = "TsBox"
+s:Ge/Crystal1r2c0/Parent                  = "World"
+s:Ge/Crystal1r2c0/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r2c0/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r2c0/VertOffset
+d:Ge/Crystal1r2c0/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r2c0/HorizOffset
+d:Ge/Crystal1r2c0/TransZ                  = 0 cm
+d:Ge/Crystal1r2c0/RotX                    = 0 deg
+d:Ge/Crystal1r2c0/RotY                    = 0 deg
+d:Ge/Crystal1r2c0/RotZ                    = 0 deg
+d:Ge/Crystal1r2c0/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r2c0/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r2c0/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r2c0/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 0
+u:Ge/Crystal1r2c0/VertOffset              = Ge/CrystalGroup/FirstPosVert + 2
+
+
+
+
+s:Ge/Crystal1r2c1/Type                    = "TsBox"
+s:Ge/Crystal1r2c1/Parent                  = "World"
+s:Ge/Crystal1r2c1/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r2c1/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r2c1/VertOffset
+d:Ge/Crystal1r2c1/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r2c1/HorizOffset
+d:Ge/Crystal1r2c1/TransZ                  = 0 cm
+d:Ge/Crystal1r2c1/RotX                    = 0 deg
+d:Ge/Crystal1r2c1/RotY                    = 0 deg
+d:Ge/Crystal1r2c1/RotZ                    = 0 deg
+d:Ge/Crystal1r2c1/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r2c1/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r2c1/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r2c1/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 1
+u:Ge/Crystal1r2c1/VertOffset              = Ge/CrystalGroup/FirstPosVert + 2
+
+
+
+
+s:Ge/Crystal1r2c2/Type                    = "TsBox"
+s:Ge/Crystal1r2c2/Parent                  = "World"
+s:Ge/Crystal1r2c2/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r2c2/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r2c2/VertOffset
+d:Ge/Crystal1r2c2/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r2c2/HorizOffset
+d:Ge/Crystal1r2c2/TransZ                  = 0 cm
+d:Ge/Crystal1r2c2/RotX                    = 0 deg
+d:Ge/Crystal1r2c2/RotY                    = 0 deg
+d:Ge/Crystal1r2c2/RotZ                    = 0 deg
+d:Ge/Crystal1r2c2/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r2c2/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r2c2/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r2c2/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 2
+u:Ge/Crystal1r2c2/VertOffset              = Ge/CrystalGroup/FirstPosVert + 2
+
+
+
+
+s:Ge/Crystal1r2c3/Type                    = "TsBox"
+s:Ge/Crystal1r2c3/Parent                  = "World"
+s:Ge/Crystal1r2c3/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r2c3/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r2c3/VertOffset
+d:Ge/Crystal1r2c3/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r2c3/HorizOffset
+d:Ge/Crystal1r2c3/TransZ                  = 0 cm
+d:Ge/Crystal1r2c3/RotX                    = 0 deg
+d:Ge/Crystal1r2c3/RotY                    = 0 deg
+d:Ge/Crystal1r2c3/RotZ                    = 0 deg
+d:Ge/Crystal1r2c3/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r2c3/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r2c3/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r2c3/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 3
+u:Ge/Crystal1r2c3/VertOffset              = Ge/CrystalGroup/FirstPosVert + 2
+
+
+
+
+s:Ge/Crystal1r2c4/Type                    = "TsBox"
+s:Ge/Crystal1r2c4/Parent                  = "World"
+s:Ge/Crystal1r2c4/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r2c4/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r2c4/VertOffset
+d:Ge/Crystal1r2c4/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r2c4/HorizOffset
+d:Ge/Crystal1r2c4/TransZ                  = 0 cm
+d:Ge/Crystal1r2c4/RotX                    = 0 deg
+d:Ge/Crystal1r2c4/RotY                    = 0 deg
+d:Ge/Crystal1r2c4/RotZ                    = 0 deg
+d:Ge/Crystal1r2c4/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r2c4/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r2c4/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r2c4/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 4
+u:Ge/Crystal1r2c4/VertOffset              = Ge/CrystalGroup/FirstPosVert + 2
+
+
+
+
+s:Ge/Crystal1r2c5/Type                    = "TsBox"
+s:Ge/Crystal1r2c5/Parent                  = "World"
+s:Ge/Crystal1r2c5/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r2c5/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r2c5/VertOffset
+d:Ge/Crystal1r2c5/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r2c5/HorizOffset
+d:Ge/Crystal1r2c5/TransZ                  = 0 cm
+d:Ge/Crystal1r2c5/RotX                    = 0 deg
+d:Ge/Crystal1r2c5/RotY                    = 0 deg
+d:Ge/Crystal1r2c5/RotZ                    = 0 deg
+d:Ge/Crystal1r2c5/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r2c5/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r2c5/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r2c5/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 5
+u:Ge/Crystal1r2c5/VertOffset              = Ge/CrystalGroup/FirstPosVert + 2
+
+
+
+
+s:Ge/Crystal1r2c6/Type                    = "TsBox"
+s:Ge/Crystal1r2c6/Parent                  = "World"
+s:Ge/Crystal1r2c6/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r2c6/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r2c6/VertOffset
+d:Ge/Crystal1r2c6/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r2c6/HorizOffset
+d:Ge/Crystal1r2c6/TransZ                  = 0 cm
+d:Ge/Crystal1r2c6/RotX                    = 0 deg
+d:Ge/Crystal1r2c6/RotY                    = 0 deg
+d:Ge/Crystal1r2c6/RotZ                    = 0 deg
+d:Ge/Crystal1r2c6/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r2c6/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r2c6/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r2c6/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 6
+u:Ge/Crystal1r2c6/VertOffset              = Ge/CrystalGroup/FirstPosVert + 2
+
+
+
+
+s:Ge/Crystal1r2c7/Type                    = "TsBox"
+s:Ge/Crystal1r2c7/Parent                  = "World"
+s:Ge/Crystal1r2c7/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r2c7/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r2c7/VertOffset
+d:Ge/Crystal1r2c7/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r2c7/HorizOffset
+d:Ge/Crystal1r2c7/TransZ                  = 0 cm
+d:Ge/Crystal1r2c7/RotX                    = 0 deg
+d:Ge/Crystal1r2c7/RotY                    = 0 deg
+d:Ge/Crystal1r2c7/RotZ                    = 0 deg
+d:Ge/Crystal1r2c7/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r2c7/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r2c7/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r2c7/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 7
+u:Ge/Crystal1r2c7/VertOffset              = Ge/CrystalGroup/FirstPosVert + 2
+
+
+
+
+s:Ge/Crystal1r3c0/Type                    = "TsBox"
+s:Ge/Crystal1r3c0/Parent                  = "World"
+s:Ge/Crystal1r3c0/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r3c0/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r3c0/VertOffset
+d:Ge/Crystal1r3c0/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r3c0/HorizOffset
+d:Ge/Crystal1r3c0/TransZ                  = 0 cm
+d:Ge/Crystal1r3c0/RotX                    = 0 deg
+d:Ge/Crystal1r3c0/RotY                    = 0 deg
+d:Ge/Crystal1r3c0/RotZ                    = 0 deg
+d:Ge/Crystal1r3c0/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r3c0/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r3c0/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r3c0/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 0
+u:Ge/Crystal1r3c0/VertOffset              = Ge/CrystalGroup/FirstPosVert + 3
+
+
+
+
+s:Ge/Crystal1r3c1/Type                    = "TsBox"
+s:Ge/Crystal1r3c1/Parent                  = "World"
+s:Ge/Crystal1r3c1/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r3c1/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r3c1/VertOffset
+d:Ge/Crystal1r3c1/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r3c1/HorizOffset
+d:Ge/Crystal1r3c1/TransZ                  = 0 cm
+d:Ge/Crystal1r3c1/RotX                    = 0 deg
+d:Ge/Crystal1r3c1/RotY                    = 0 deg
+d:Ge/Crystal1r3c1/RotZ                    = 0 deg
+d:Ge/Crystal1r3c1/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r3c1/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r3c1/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r3c1/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 1
+u:Ge/Crystal1r3c1/VertOffset              = Ge/CrystalGroup/FirstPosVert + 3
+
+
+
+
+s:Ge/Crystal1r3c2/Type                    = "TsBox"
+s:Ge/Crystal1r3c2/Parent                  = "World"
+s:Ge/Crystal1r3c2/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r3c2/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r3c2/VertOffset
+d:Ge/Crystal1r3c2/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r3c2/HorizOffset
+d:Ge/Crystal1r3c2/TransZ                  = 0 cm
+d:Ge/Crystal1r3c2/RotX                    = 0 deg
+d:Ge/Crystal1r3c2/RotY                    = 0 deg
+d:Ge/Crystal1r3c2/RotZ                    = 0 deg
+d:Ge/Crystal1r3c2/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r3c2/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r3c2/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r3c2/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 2
+u:Ge/Crystal1r3c2/VertOffset              = Ge/CrystalGroup/FirstPosVert + 3
+
+
+
+
+s:Ge/Crystal1r3c3/Type                    = "TsBox"
+s:Ge/Crystal1r3c3/Parent                  = "World"
+s:Ge/Crystal1r3c3/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r3c3/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r3c3/VertOffset
+d:Ge/Crystal1r3c3/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r3c3/HorizOffset
+d:Ge/Crystal1r3c3/TransZ                  = 0 cm
+d:Ge/Crystal1r3c3/RotX                    = 0 deg
+d:Ge/Crystal1r3c3/RotY                    = 0 deg
+d:Ge/Crystal1r3c3/RotZ                    = 0 deg
+d:Ge/Crystal1r3c3/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r3c3/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r3c3/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r3c3/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 3
+u:Ge/Crystal1r3c3/VertOffset              = Ge/CrystalGroup/FirstPosVert + 3
+
+
+
+
+s:Ge/Crystal1r3c4/Type                    = "TsBox"
+s:Ge/Crystal1r3c4/Parent                  = "World"
+s:Ge/Crystal1r3c4/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r3c4/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r3c4/VertOffset
+d:Ge/Crystal1r3c4/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r3c4/HorizOffset
+d:Ge/Crystal1r3c4/TransZ                  = 0 cm
+d:Ge/Crystal1r3c4/RotX                    = 0 deg
+d:Ge/Crystal1r3c4/RotY                    = 0 deg
+d:Ge/Crystal1r3c4/RotZ                    = 0 deg
+d:Ge/Crystal1r3c4/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r3c4/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r3c4/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r3c4/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 4
+u:Ge/Crystal1r3c4/VertOffset              = Ge/CrystalGroup/FirstPosVert + 3
+
+
+
+
+s:Ge/Crystal1r3c5/Type                    = "TsBox"
+s:Ge/Crystal1r3c5/Parent                  = "World"
+s:Ge/Crystal1r3c5/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r3c5/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r3c5/VertOffset
+d:Ge/Crystal1r3c5/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r3c5/HorizOffset
+d:Ge/Crystal1r3c5/TransZ                  = 0 cm
+d:Ge/Crystal1r3c5/RotX                    = 0 deg
+d:Ge/Crystal1r3c5/RotY                    = 0 deg
+d:Ge/Crystal1r3c5/RotZ                    = 0 deg
+d:Ge/Crystal1r3c5/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r3c5/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r3c5/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r3c5/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 5
+u:Ge/Crystal1r3c5/VertOffset              = Ge/CrystalGroup/FirstPosVert + 3
+
+
+
+
+s:Ge/Crystal1r3c6/Type                    = "TsBox"
+s:Ge/Crystal1r3c6/Parent                  = "World"
+s:Ge/Crystal1r3c6/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r3c6/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r3c6/VertOffset
+d:Ge/Crystal1r3c6/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r3c6/HorizOffset
+d:Ge/Crystal1r3c6/TransZ                  = 0 cm
+d:Ge/Crystal1r3c6/RotX                    = 0 deg
+d:Ge/Crystal1r3c6/RotY                    = 0 deg
+d:Ge/Crystal1r3c6/RotZ                    = 0 deg
+d:Ge/Crystal1r3c6/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r3c6/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r3c6/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r3c6/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 6
+u:Ge/Crystal1r3c6/VertOffset              = Ge/CrystalGroup/FirstPosVert + 3
+
+
+
+
+s:Ge/Crystal1r3c7/Type                    = "TsBox"
+s:Ge/Crystal1r3c7/Parent                  = "World"
+s:Ge/Crystal1r3c7/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r3c7/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r3c7/VertOffset
+d:Ge/Crystal1r3c7/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r3c7/HorizOffset
+d:Ge/Crystal1r3c7/TransZ                  = 0 cm
+d:Ge/Crystal1r3c7/RotX                    = 0 deg
+d:Ge/Crystal1r3c7/RotY                    = 0 deg
+d:Ge/Crystal1r3c7/RotZ                    = 0 deg
+d:Ge/Crystal1r3c7/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r3c7/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r3c7/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r3c7/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 7
+u:Ge/Crystal1r3c7/VertOffset              = Ge/CrystalGroup/FirstPosVert + 3
+
+
+
+
+s:Ge/Crystal1r4c0/Type                    = "TsBox"
+s:Ge/Crystal1r4c0/Parent                  = "World"
+s:Ge/Crystal1r4c0/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r4c0/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r4c0/VertOffset
+d:Ge/Crystal1r4c0/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r4c0/HorizOffset
+d:Ge/Crystal1r4c0/TransZ                  = 0 cm
+d:Ge/Crystal1r4c0/RotX                    = 0 deg
+d:Ge/Crystal1r4c0/RotY                    = 0 deg
+d:Ge/Crystal1r4c0/RotZ                    = 0 deg
+d:Ge/Crystal1r4c0/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r4c0/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r4c0/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r4c0/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 0
+u:Ge/Crystal1r4c0/VertOffset              = Ge/CrystalGroup/FirstPosVert + 4
+
+
+
+
+s:Ge/Crystal1r4c1/Type                    = "TsBox"
+s:Ge/Crystal1r4c1/Parent                  = "World"
+s:Ge/Crystal1r4c1/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r4c1/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r4c1/VertOffset
+d:Ge/Crystal1r4c1/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r4c1/HorizOffset
+d:Ge/Crystal1r4c1/TransZ                  = 0 cm
+d:Ge/Crystal1r4c1/RotX                    = 0 deg
+d:Ge/Crystal1r4c1/RotY                    = 0 deg
+d:Ge/Crystal1r4c1/RotZ                    = 0 deg
+d:Ge/Crystal1r4c1/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r4c1/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r4c1/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r4c1/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 1
+u:Ge/Crystal1r4c1/VertOffset              = Ge/CrystalGroup/FirstPosVert + 4
+
+
+
+
+s:Ge/Crystal1r4c2/Type                    = "TsBox"
+s:Ge/Crystal1r4c2/Parent                  = "World"
+s:Ge/Crystal1r4c2/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r4c2/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r4c2/VertOffset
+d:Ge/Crystal1r4c2/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r4c2/HorizOffset
+d:Ge/Crystal1r4c2/TransZ                  = 0 cm
+d:Ge/Crystal1r4c2/RotX                    = 0 deg
+d:Ge/Crystal1r4c2/RotY                    = 0 deg
+d:Ge/Crystal1r4c2/RotZ                    = 0 deg
+d:Ge/Crystal1r4c2/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r4c2/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r4c2/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r4c2/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 2
+u:Ge/Crystal1r4c2/VertOffset              = Ge/CrystalGroup/FirstPosVert + 4
+
+
+
+
+s:Ge/Crystal1r4c3/Type                    = "TsBox"
+s:Ge/Crystal1r4c3/Parent                  = "World"
+s:Ge/Crystal1r4c3/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r4c3/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r4c3/VertOffset
+d:Ge/Crystal1r4c3/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r4c3/HorizOffset
+d:Ge/Crystal1r4c3/TransZ                  = 0 cm
+d:Ge/Crystal1r4c3/RotX                    = 0 deg
+d:Ge/Crystal1r4c3/RotY                    = 0 deg
+d:Ge/Crystal1r4c3/RotZ                    = 0 deg
+d:Ge/Crystal1r4c3/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r4c3/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r4c3/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r4c3/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 3
+u:Ge/Crystal1r4c3/VertOffset              = Ge/CrystalGroup/FirstPosVert + 4
+
+
+
+
+s:Ge/Crystal1r4c4/Type                    = "TsBox"
+s:Ge/Crystal1r4c4/Parent                  = "World"
+s:Ge/Crystal1r4c4/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r4c4/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r4c4/VertOffset
+d:Ge/Crystal1r4c4/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r4c4/HorizOffset
+d:Ge/Crystal1r4c4/TransZ                  = 0 cm
+d:Ge/Crystal1r4c4/RotX                    = 0 deg
+d:Ge/Crystal1r4c4/RotY                    = 0 deg
+d:Ge/Crystal1r4c4/RotZ                    = 0 deg
+d:Ge/Crystal1r4c4/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r4c4/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r4c4/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r4c4/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 4
+u:Ge/Crystal1r4c4/VertOffset              = Ge/CrystalGroup/FirstPosVert + 4
+
+
+
+
+s:Ge/Crystal1r4c5/Type                    = "TsBox"
+s:Ge/Crystal1r4c5/Parent                  = "World"
+s:Ge/Crystal1r4c5/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r4c5/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r4c5/VertOffset
+d:Ge/Crystal1r4c5/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r4c5/HorizOffset
+d:Ge/Crystal1r4c5/TransZ                  = 0 cm
+d:Ge/Crystal1r4c5/RotX                    = 0 deg
+d:Ge/Crystal1r4c5/RotY                    = 0 deg
+d:Ge/Crystal1r4c5/RotZ                    = 0 deg
+d:Ge/Crystal1r4c5/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r4c5/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r4c5/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r4c5/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 5
+u:Ge/Crystal1r4c5/VertOffset              = Ge/CrystalGroup/FirstPosVert + 4
+
+
+
+
+s:Ge/Crystal1r4c6/Type                    = "TsBox"
+s:Ge/Crystal1r4c6/Parent                  = "World"
+s:Ge/Crystal1r4c6/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r4c6/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r4c6/VertOffset
+d:Ge/Crystal1r4c6/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r4c6/HorizOffset
+d:Ge/Crystal1r4c6/TransZ                  = 0 cm
+d:Ge/Crystal1r4c6/RotX                    = 0 deg
+d:Ge/Crystal1r4c6/RotY                    = 0 deg
+d:Ge/Crystal1r4c6/RotZ                    = 0 deg
+d:Ge/Crystal1r4c6/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r4c6/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r4c6/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r4c6/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 6
+u:Ge/Crystal1r4c6/VertOffset              = Ge/CrystalGroup/FirstPosVert + 4
+
+
+
+
+s:Ge/Crystal1r4c7/Type                    = "TsBox"
+s:Ge/Crystal1r4c7/Parent                  = "World"
+s:Ge/Crystal1r4c7/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r4c7/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r4c7/VertOffset
+d:Ge/Crystal1r4c7/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r4c7/HorizOffset
+d:Ge/Crystal1r4c7/TransZ                  = 0 cm
+d:Ge/Crystal1r4c7/RotX                    = 0 deg
+d:Ge/Crystal1r4c7/RotY                    = 0 deg
+d:Ge/Crystal1r4c7/RotZ                    = 0 deg
+d:Ge/Crystal1r4c7/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r4c7/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r4c7/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r4c7/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 7
+u:Ge/Crystal1r4c7/VertOffset              = Ge/CrystalGroup/FirstPosVert + 4
+
+
+
+
+s:Ge/Crystal1r5c0/Type                    = "TsBox"
+s:Ge/Crystal1r5c0/Parent                  = "World"
+s:Ge/Crystal1r5c0/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r5c0/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r5c0/VertOffset
+d:Ge/Crystal1r5c0/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r5c0/HorizOffset
+d:Ge/Crystal1r5c0/TransZ                  = 0 cm
+d:Ge/Crystal1r5c0/RotX                    = 0 deg
+d:Ge/Crystal1r5c0/RotY                    = 0 deg
+d:Ge/Crystal1r5c0/RotZ                    = 0 deg
+d:Ge/Crystal1r5c0/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r5c0/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r5c0/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r5c0/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 0
+u:Ge/Crystal1r5c0/VertOffset              = Ge/CrystalGroup/FirstPosVert + 5
+
+
+
+
+s:Ge/Crystal1r5c1/Type                    = "TsBox"
+s:Ge/Crystal1r5c1/Parent                  = "World"
+s:Ge/Crystal1r5c1/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r5c1/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r5c1/VertOffset
+d:Ge/Crystal1r5c1/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r5c1/HorizOffset
+d:Ge/Crystal1r5c1/TransZ                  = 0 cm
+d:Ge/Crystal1r5c1/RotX                    = 0 deg
+d:Ge/Crystal1r5c1/RotY                    = 0 deg
+d:Ge/Crystal1r5c1/RotZ                    = 0 deg
+d:Ge/Crystal1r5c1/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r5c1/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r5c1/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r5c1/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 1
+u:Ge/Crystal1r5c1/VertOffset              = Ge/CrystalGroup/FirstPosVert + 5
+
+
+
+
+s:Ge/Crystal1r5c2/Type                    = "TsBox"
+s:Ge/Crystal1r5c2/Parent                  = "World"
+s:Ge/Crystal1r5c2/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r5c2/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r5c2/VertOffset
+d:Ge/Crystal1r5c2/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r5c2/HorizOffset
+d:Ge/Crystal1r5c2/TransZ                  = 0 cm
+d:Ge/Crystal1r5c2/RotX                    = 0 deg
+d:Ge/Crystal1r5c2/RotY                    = 0 deg
+d:Ge/Crystal1r5c2/RotZ                    = 0 deg
+d:Ge/Crystal1r5c2/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r5c2/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r5c2/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r5c2/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 2
+u:Ge/Crystal1r5c2/VertOffset              = Ge/CrystalGroup/FirstPosVert + 5
+
+
+
+
+s:Ge/Crystal1r5c3/Type                    = "TsBox"
+s:Ge/Crystal1r5c3/Parent                  = "World"
+s:Ge/Crystal1r5c3/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r5c3/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r5c3/VertOffset
+d:Ge/Crystal1r5c3/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r5c3/HorizOffset
+d:Ge/Crystal1r5c3/TransZ                  = 0 cm
+d:Ge/Crystal1r5c3/RotX                    = 0 deg
+d:Ge/Crystal1r5c3/RotY                    = 0 deg
+d:Ge/Crystal1r5c3/RotZ                    = 0 deg
+d:Ge/Crystal1r5c3/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r5c3/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r5c3/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r5c3/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 3
+u:Ge/Crystal1r5c3/VertOffset              = Ge/CrystalGroup/FirstPosVert + 5
+
+
+
+
+s:Ge/Crystal1r5c4/Type                    = "TsBox"
+s:Ge/Crystal1r5c4/Parent                  = "World"
+s:Ge/Crystal1r5c4/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r5c4/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r5c4/VertOffset
+d:Ge/Crystal1r5c4/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r5c4/HorizOffset
+d:Ge/Crystal1r5c4/TransZ                  = 0 cm
+d:Ge/Crystal1r5c4/RotX                    = 0 deg
+d:Ge/Crystal1r5c4/RotY                    = 0 deg
+d:Ge/Crystal1r5c4/RotZ                    = 0 deg
+d:Ge/Crystal1r5c4/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r5c4/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r5c4/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r5c4/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 4
+u:Ge/Crystal1r5c4/VertOffset              = Ge/CrystalGroup/FirstPosVert + 5
+
+
+
+
+s:Ge/Crystal1r5c5/Type                    = "TsBox"
+s:Ge/Crystal1r5c5/Parent                  = "World"
+s:Ge/Crystal1r5c5/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r5c5/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r5c5/VertOffset
+d:Ge/Crystal1r5c5/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r5c5/HorizOffset
+d:Ge/Crystal1r5c5/TransZ                  = 0 cm
+d:Ge/Crystal1r5c5/RotX                    = 0 deg
+d:Ge/Crystal1r5c5/RotY                    = 0 deg
+d:Ge/Crystal1r5c5/RotZ                    = 0 deg
+d:Ge/Crystal1r5c5/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r5c5/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r5c5/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r5c5/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 5
+u:Ge/Crystal1r5c5/VertOffset              = Ge/CrystalGroup/FirstPosVert + 5
+
+
+
+
+s:Ge/Crystal1r5c6/Type                    = "TsBox"
+s:Ge/Crystal1r5c6/Parent                  = "World"
+s:Ge/Crystal1r5c6/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r5c6/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r5c6/VertOffset
+d:Ge/Crystal1r5c6/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r5c6/HorizOffset
+d:Ge/Crystal1r5c6/TransZ                  = 0 cm
+d:Ge/Crystal1r5c6/RotX                    = 0 deg
+d:Ge/Crystal1r5c6/RotY                    = 0 deg
+d:Ge/Crystal1r5c6/RotZ                    = 0 deg
+d:Ge/Crystal1r5c6/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r5c6/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r5c6/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r5c6/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 6
+u:Ge/Crystal1r5c6/VertOffset              = Ge/CrystalGroup/FirstPosVert + 5
+
+
+
+
+s:Ge/Crystal1r5c7/Type                    = "TsBox"
+s:Ge/Crystal1r5c7/Parent                  = "World"
+s:Ge/Crystal1r5c7/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r5c7/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r5c7/VertOffset
+d:Ge/Crystal1r5c7/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r5c7/HorizOffset
+d:Ge/Crystal1r5c7/TransZ                  = 0 cm
+d:Ge/Crystal1r5c7/RotX                    = 0 deg
+d:Ge/Crystal1r5c7/RotY                    = 0 deg
+d:Ge/Crystal1r5c7/RotZ                    = 0 deg
+d:Ge/Crystal1r5c7/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r5c7/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r5c7/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r5c7/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 7
+u:Ge/Crystal1r5c7/VertOffset              = Ge/CrystalGroup/FirstPosVert + 5
+
+
+
+
+s:Ge/Crystal1r6c0/Type                    = "TsBox"
+s:Ge/Crystal1r6c0/Parent                  = "World"
+s:Ge/Crystal1r6c0/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r6c0/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r6c0/VertOffset
+d:Ge/Crystal1r6c0/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r6c0/HorizOffset
+d:Ge/Crystal1r6c0/TransZ                  = 0 cm
+d:Ge/Crystal1r6c0/RotX                    = 0 deg
+d:Ge/Crystal1r6c0/RotY                    = 0 deg
+d:Ge/Crystal1r6c0/RotZ                    = 0 deg
+d:Ge/Crystal1r6c0/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r6c0/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r6c0/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r6c0/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 0
+u:Ge/Crystal1r6c0/VertOffset              = Ge/CrystalGroup/FirstPosVert + 6
+
+
+
+
+s:Ge/Crystal1r6c1/Type                    = "TsBox"
+s:Ge/Crystal1r6c1/Parent                  = "World"
+s:Ge/Crystal1r6c1/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r6c1/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r6c1/VertOffset
+d:Ge/Crystal1r6c1/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r6c1/HorizOffset
+d:Ge/Crystal1r6c1/TransZ                  = 0 cm
+d:Ge/Crystal1r6c1/RotX                    = 0 deg
+d:Ge/Crystal1r6c1/RotY                    = 0 deg
+d:Ge/Crystal1r6c1/RotZ                    = 0 deg
+d:Ge/Crystal1r6c1/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r6c1/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r6c1/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r6c1/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 1
+u:Ge/Crystal1r6c1/VertOffset              = Ge/CrystalGroup/FirstPosVert + 6
+
+
+
+
+s:Ge/Crystal1r6c2/Type                    = "TsBox"
+s:Ge/Crystal1r6c2/Parent                  = "World"
+s:Ge/Crystal1r6c2/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r6c2/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r6c2/VertOffset
+d:Ge/Crystal1r6c2/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r6c2/HorizOffset
+d:Ge/Crystal1r6c2/TransZ                  = 0 cm
+d:Ge/Crystal1r6c2/RotX                    = 0 deg
+d:Ge/Crystal1r6c2/RotY                    = 0 deg
+d:Ge/Crystal1r6c2/RotZ                    = 0 deg
+d:Ge/Crystal1r6c2/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r6c2/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r6c2/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r6c2/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 2
+u:Ge/Crystal1r6c2/VertOffset              = Ge/CrystalGroup/FirstPosVert + 6
+
+
+
+
+s:Ge/Crystal1r6c3/Type                    = "TsBox"
+s:Ge/Crystal1r6c3/Parent                  = "World"
+s:Ge/Crystal1r6c3/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r6c3/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r6c3/VertOffset
+d:Ge/Crystal1r6c3/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r6c3/HorizOffset
+d:Ge/Crystal1r6c3/TransZ                  = 0 cm
+d:Ge/Crystal1r6c3/RotX                    = 0 deg
+d:Ge/Crystal1r6c3/RotY                    = 0 deg
+d:Ge/Crystal1r6c3/RotZ                    = 0 deg
+d:Ge/Crystal1r6c3/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r6c3/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r6c3/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r6c3/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 3
+u:Ge/Crystal1r6c3/VertOffset              = Ge/CrystalGroup/FirstPosVert + 6
+
+
+
+
+s:Ge/Crystal1r6c4/Type                    = "TsBox"
+s:Ge/Crystal1r6c4/Parent                  = "World"
+s:Ge/Crystal1r6c4/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r6c4/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r6c4/VertOffset
+d:Ge/Crystal1r6c4/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r6c4/HorizOffset
+d:Ge/Crystal1r6c4/TransZ                  = 0 cm
+d:Ge/Crystal1r6c4/RotX                    = 0 deg
+d:Ge/Crystal1r6c4/RotY                    = 0 deg
+d:Ge/Crystal1r6c4/RotZ                    = 0 deg
+d:Ge/Crystal1r6c4/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r6c4/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r6c4/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r6c4/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 4
+u:Ge/Crystal1r6c4/VertOffset              = Ge/CrystalGroup/FirstPosVert + 6
+
+
+
+
+s:Ge/Crystal1r6c5/Type                    = "TsBox"
+s:Ge/Crystal1r6c5/Parent                  = "World"
+s:Ge/Crystal1r6c5/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r6c5/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r6c5/VertOffset
+d:Ge/Crystal1r6c5/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r6c5/HorizOffset
+d:Ge/Crystal1r6c5/TransZ                  = 0 cm
+d:Ge/Crystal1r6c5/RotX                    = 0 deg
+d:Ge/Crystal1r6c5/RotY                    = 0 deg
+d:Ge/Crystal1r6c5/RotZ                    = 0 deg
+d:Ge/Crystal1r6c5/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r6c5/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r6c5/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r6c5/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 5
+u:Ge/Crystal1r6c5/VertOffset              = Ge/CrystalGroup/FirstPosVert + 6
+
+
+
+
+s:Ge/Crystal1r6c6/Type                    = "TsBox"
+s:Ge/Crystal1r6c6/Parent                  = "World"
+s:Ge/Crystal1r6c6/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r6c6/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r6c6/VertOffset
+d:Ge/Crystal1r6c6/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r6c6/HorizOffset
+d:Ge/Crystal1r6c6/TransZ                  = 0 cm
+d:Ge/Crystal1r6c6/RotX                    = 0 deg
+d:Ge/Crystal1r6c6/RotY                    = 0 deg
+d:Ge/Crystal1r6c6/RotZ                    = 0 deg
+d:Ge/Crystal1r6c6/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r6c6/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r6c6/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r6c6/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 6
+u:Ge/Crystal1r6c6/VertOffset              = Ge/CrystalGroup/FirstPosVert + 6
+
+
+
+
+s:Ge/Crystal1r6c7/Type                    = "TsBox"
+s:Ge/Crystal1r6c7/Parent                  = "World"
+s:Ge/Crystal1r6c7/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r6c7/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r6c7/VertOffset
+d:Ge/Crystal1r6c7/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r6c7/HorizOffset
+d:Ge/Crystal1r6c7/TransZ                  = 0 cm
+d:Ge/Crystal1r6c7/RotX                    = 0 deg
+d:Ge/Crystal1r6c7/RotY                    = 0 deg
+d:Ge/Crystal1r6c7/RotZ                    = 0 deg
+d:Ge/Crystal1r6c7/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r6c7/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r6c7/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r6c7/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 7
+u:Ge/Crystal1r6c7/VertOffset              = Ge/CrystalGroup/FirstPosVert + 6
+
+
+
+
+s:Ge/Crystal1r7c0/Type                    = "TsBox"
+s:Ge/Crystal1r7c0/Parent                  = "World"
+s:Ge/Crystal1r7c0/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r7c0/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r7c0/VertOffset
+d:Ge/Crystal1r7c0/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r7c0/HorizOffset
+d:Ge/Crystal1r7c0/TransZ                  = 0 cm
+d:Ge/Crystal1r7c0/RotX                    = 0 deg
+d:Ge/Crystal1r7c0/RotY                    = 0 deg
+d:Ge/Crystal1r7c0/RotZ                    = 0 deg
+d:Ge/Crystal1r7c0/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r7c0/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r7c0/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r7c0/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 0
+u:Ge/Crystal1r7c0/VertOffset              = Ge/CrystalGroup/FirstPosVert + 7
+
+
+
+
+s:Ge/Crystal1r7c1/Type                    = "TsBox"
+s:Ge/Crystal1r7c1/Parent                  = "World"
+s:Ge/Crystal1r7c1/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r7c1/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r7c1/VertOffset
+d:Ge/Crystal1r7c1/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r7c1/HorizOffset
+d:Ge/Crystal1r7c1/TransZ                  = 0 cm
+d:Ge/Crystal1r7c1/RotX                    = 0 deg
+d:Ge/Crystal1r7c1/RotY                    = 0 deg
+d:Ge/Crystal1r7c1/RotZ                    = 0 deg
+d:Ge/Crystal1r7c1/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r7c1/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r7c1/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r7c1/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 1
+u:Ge/Crystal1r7c1/VertOffset              = Ge/CrystalGroup/FirstPosVert + 7
+
+
+
+
+s:Ge/Crystal1r7c2/Type                    = "TsBox"
+s:Ge/Crystal1r7c2/Parent                  = "World"
+s:Ge/Crystal1r7c2/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r7c2/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r7c2/VertOffset
+d:Ge/Crystal1r7c2/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r7c2/HorizOffset
+d:Ge/Crystal1r7c2/TransZ                  = 0 cm
+d:Ge/Crystal1r7c2/RotX                    = 0 deg
+d:Ge/Crystal1r7c2/RotY                    = 0 deg
+d:Ge/Crystal1r7c2/RotZ                    = 0 deg
+d:Ge/Crystal1r7c2/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r7c2/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r7c2/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r7c2/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 2
+u:Ge/Crystal1r7c2/VertOffset              = Ge/CrystalGroup/FirstPosVert + 7
+
+
+
+
+s:Ge/Crystal1r7c3/Type                    = "TsBox"
+s:Ge/Crystal1r7c3/Parent                  = "World"
+s:Ge/Crystal1r7c3/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r7c3/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r7c3/VertOffset
+d:Ge/Crystal1r7c3/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r7c3/HorizOffset
+d:Ge/Crystal1r7c3/TransZ                  = 0 cm
+d:Ge/Crystal1r7c3/RotX                    = 0 deg
+d:Ge/Crystal1r7c3/RotY                    = 0 deg
+d:Ge/Crystal1r7c3/RotZ                    = 0 deg
+d:Ge/Crystal1r7c3/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r7c3/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r7c3/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r7c3/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 3
+u:Ge/Crystal1r7c3/VertOffset              = Ge/CrystalGroup/FirstPosVert + 7
+
+
+
+
+s:Ge/Crystal1r7c4/Type                    = "TsBox"
+s:Ge/Crystal1r7c4/Parent                  = "World"
+s:Ge/Crystal1r7c4/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r7c4/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r7c4/VertOffset
+d:Ge/Crystal1r7c4/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r7c4/HorizOffset
+d:Ge/Crystal1r7c4/TransZ                  = 0 cm
+d:Ge/Crystal1r7c4/RotX                    = 0 deg
+d:Ge/Crystal1r7c4/RotY                    = 0 deg
+d:Ge/Crystal1r7c4/RotZ                    = 0 deg
+d:Ge/Crystal1r7c4/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r7c4/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r7c4/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r7c4/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 4
+u:Ge/Crystal1r7c4/VertOffset              = Ge/CrystalGroup/FirstPosVert + 7
+
+
+
+
+s:Ge/Crystal1r7c5/Type                    = "TsBox"
+s:Ge/Crystal1r7c5/Parent                  = "World"
+s:Ge/Crystal1r7c5/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r7c5/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r7c5/VertOffset
+d:Ge/Crystal1r7c5/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r7c5/HorizOffset
+d:Ge/Crystal1r7c5/TransZ                  = 0 cm
+d:Ge/Crystal1r7c5/RotX                    = 0 deg
+d:Ge/Crystal1r7c5/RotY                    = 0 deg
+d:Ge/Crystal1r7c5/RotZ                    = 0 deg
+d:Ge/Crystal1r7c5/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r7c5/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r7c5/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r7c5/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 5
+u:Ge/Crystal1r7c5/VertOffset              = Ge/CrystalGroup/FirstPosVert + 7
+
+
+
+
+s:Ge/Crystal1r7c6/Type                    = "TsBox"
+s:Ge/Crystal1r7c6/Parent                  = "World"
+s:Ge/Crystal1r7c6/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r7c6/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r7c6/VertOffset
+d:Ge/Crystal1r7c6/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r7c6/HorizOffset
+d:Ge/Crystal1r7c6/TransZ                  = 0 cm
+d:Ge/Crystal1r7c6/RotX                    = 0 deg
+d:Ge/Crystal1r7c6/RotY                    = 0 deg
+d:Ge/Crystal1r7c6/RotZ                    = 0 deg
+d:Ge/Crystal1r7c6/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r7c6/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r7c6/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r7c6/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 6
+u:Ge/Crystal1r7c6/VertOffset              = Ge/CrystalGroup/FirstPosVert + 7
+
+
+
+
+s:Ge/Crystal1r7c7/Type                    = "TsBox"
+s:Ge/Crystal1r7c7/Parent                  = "World"
+s:Ge/Crystal1r7c7/Material                = Ge/CrystalGroup/CrystalMaterial
+d:Ge/Crystal1r7c7/TransX                  = Ge/CrystalGroup/DeltaX mm * Ge/Crystal1r7c7/VertOffset
+d:Ge/Crystal1r7c7/TransY                  = Ge/CrystalGroup/DeltaY mm * Ge/Crystal1r7c7/HorizOffset
+d:Ge/Crystal1r7c7/TransZ                  = 0 cm
+d:Ge/Crystal1r7c7/RotX                    = 0 deg
+d:Ge/Crystal1r7c7/RotY                    = 0 deg
+d:Ge/Crystal1r7c7/RotZ                    = 0 deg
+d:Ge/Crystal1r7c7/HLX                     = Ge/CrystalGroup/CrystalHLX mm
+d:Ge/Crystal1r7c7/HLY                     = Ge/CrystalGroup/CrystalHLY mm
+d:Ge/Crystal1r7c7/HLZ                     = Ge/CrystalGroup/CrystalHLZ mm
+u:Ge/Crystal1r7c7/HorizOffset             = Ge/CrystalGroup/FirstPosHoriz + 7
+u:Ge/Crystal1r7c7/VertOffset              = Ge/CrystalGroup/FirstPosVert + 7
+
+
+
+
+
+
+
+
+
+s:Ge/PETScanner/Type               = "TsCylinder"
+#s:Ge/PETScanner/Parent             = "World"
+s:Ge/PETScanner/Material           = "Lead"
+d:Ge/PETScanner/TransX             = 0 cm
+d:Ge/PETScanner/TransY             = 0 cm
+d:Ge/PETScanner/TransZ             = 0 cm
+d:Ge/PETScanner/RotX               = 0 deg
+d:Ge/PETScanner/RotY               = 0 deg
+d:Ge/PETScanner/RotZ               = 0 deg
+d:Ge/PETScanner/RMin               = 1.9 m
+d:Ge/PETScanner/RMax               = 2 m
+d:Ge/PETScanner/HL                 = 20 cm
+d:Ge/PETScanner/SPhi               = 0 deg
+d:Ge/PETScanner/DPhi               = 360 deg
+s:Ge/PETScanner/Color              = "Orange"
+s:Ge/PETScanner/DrawingStyle       = "FullWireFrame"
+i:Ge/PETScanner/PhiBins = 360
+
+
+
+
+
+#s:Sc/PETScore/Component = "PETScanner"
+#s:Sc/PETScore/Quantity = "PETScorer"
+#s:Sc/PETScore/IfOutputFileAlreadyExists = "Overwrite" # re-write
+#sv:Sc/PETScore/OnlyIncludeParticlesNamed = 1 "gamma"
+#i:Sc/PETScore/PhiBins = 360
+#s:Sc/PETScore/OutputType = "ASCII"
+
+
+
+
+#s:Sc/PETScore/Quantity = "DoseToMedium"
+#s:Sc/PETScore/Component = "PETScanner"
+#i:Sc/PETScore/ZBins = 100
+#s:Sc/PETScore/OutputFile = "PETBinnedOutput"
+#s:Sc/PETScore/IfOutputFileAlreadyExists = "Overwrite"
+#sv:Sc/PETScore/OnlyIncludeParticlesNamed = 1 "gamma"
+
+
+
+
+i:Ts/ShowHistoryCountAtInterval = 10000
+#i:Ts/ShowRunCountAtInterval = 10000
