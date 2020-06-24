@@ -1,7 +1,7 @@
 import math
 import pyperclip
 
-num_blocks = 200
+num_blocks = 6
 
 crystals_horiz = 8
 crystals_vert = 8
@@ -24,7 +24,7 @@ experiment_length = 10**5 #ns
 
 num_time_bins = math.ceil(experiment_length/time_resolution)
 
-angle_increment = math.pi * (num_blocks - 2) / num_blocks
+angle_increment = math.pi * 2 / num_blocks#math.pi * (num_blocks - 2) / num_blocks
 
 result = f""" 
 s:Tf/TimeSliceNum/Function      = "Step"
@@ -44,33 +44,40 @@ d:Ge/PETScannerRing/BlockLX               = {crystals_vert * crystal_lx + (cryst
 d:Ge/PETScannerRing/R                     = Ge/PETScannerRing/BlockLX mm * {.5 / math.sin(math.pi / num_blocks)}
 """
 
-for block_num in range(0,num_blocks):
+for block_num in range(0,num_blocks):#num_blocks):
+
+	rotation_angle = math.pi * .5
+
+	rotation_angle += angle_increment * block_num
+
+	#if block_num <= num_blocks / 2:
+	#	rotation_angle += math.pi
 
 	result += f"""
 s:Ge/CrystalGroup{block_num}/Type                  = "Group"
 s:Ge/CrystalGroup{block_num}/Parent                = "PETScannerRing"
-d:Ge/CrystalGroup{block_num}/TransX                = Ge/PETScannerRing/R mm * {math.sin(math.pi * 2 * (block_num/num_blocks))}
+d:Ge/CrystalGroup{block_num}/TransX                = Ge/PETScannerRing/R mm * {math.sin(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
 d:Ge/CrystalGroup{block_num}/TransY                = 0. m
-d:Ge/CrystalGroup{block_num}/TransZ                = Ge/PETScannerRing/R mm * {math.cos(math.pi * 2 * (block_num/num_blocks))}
+d:Ge/CrystalGroup{block_num}/TransZ                = Ge/PETScannerRing/R mm * {math.cos(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
 d:Ge/CrystalGroup{block_num}/RotX                  = 0. deg
-d:Ge/CrystalGroup{block_num}/RotY                  = {angle_increment * block_num} rad
+d:Ge/CrystalGroup{block_num}/RotY                  = {rotation_angle} rad
 d:Ge/CrystalGroup{block_num}/RotZ                  = 0. deg
-d:Ge/CrystalGroup{block_num}/MarginHoriz           = .5 mm #made up number
-d:Ge/CrystalGroup{block_num}/MarginVert            = .5 mm #made up number
+d:Ge/CrystalGroup{block_num}/MarginHoriz           = {margin_horiz} mm #made up number
+d:Ge/CrystalGroup{block_num}/MarginVert            = {margin_vert} mm #made up number
 i:Ge/CrystalGroup{block_num}/CrystalsHoriz         = {crystals_horiz}
 i:Ge/CrystalGroup{block_num}/CrystalsVert          = {crystals_vert}
 u:Ge/CrystalGroup{block_num}/NegHalfCrystalsHoriz  = -.5 * Ge/CrystalGroup{block_num}/CrystalsHoriz
 u:Ge/CrystalGroup{block_num}/NegHalfCrystalsVert   = -.5 * Ge/CrystalGroup{block_num}/CrystalsHoriz
-u:Ge/CrystalGroup{block_num}/FirstPosHoriz         = Ge/CrystalGroup/NegHalfCrystalsHoriz + .5
-u:Ge/CrystalGroup{block_num}/FirstPosVert          = Ge/CrystalGroup/NegHalfCrystalsVert  + .5
+u:Ge/CrystalGroup{block_num}/FirstPosHoriz         = Ge/CrystalGroup{block_num}/NegHalfCrystalsHoriz + .5
+u:Ge/CrystalGroup{block_num}/FirstPosVert          = Ge/CrystalGroup{block_num}/NegHalfCrystalsVert  + .5
 d:Ge/CrystalGroup{block_num}/CrystalHLX            = .5 * Ge/CrystalGroup{block_num}/CrystalLX mm
 d:Ge/CrystalGroup{block_num}/CrystalHLY            = .5 * Ge/CrystalGroup{block_num}/CrystalLY mm
 d:Ge/CrystalGroup{block_num}/CrystalHLZ            = .5 * Ge/CrystalGroup{block_num}/CrystalLZ mm
 d:Ge/CrystalGroup{block_num}/CrystalLX             = {crystal_lx} mm
 d:Ge/CrystalGroup{block_num}/CrystalLY             = {crystal_ly} mm
 d:Ge/CrystalGroup{block_num}/CrystalLZ             = {crystal_lz} mm
-d:Ge/CrystalGroup{block_num}/DeltaX                = Ge/CrystalGroup{block_num}/CrystalLX + Ge/CrystalGroup/MarginVert mm
-d:Ge/CrystalGroup{block_num}/DeltaY                = Ge/CrystalGroup{block_num}/CrystalLY + Ge/CrystalGroup/MarginHoriz mm
+d:Ge/CrystalGroup{block_num}/DeltaX                = Ge/CrystalGroup{block_num}/CrystalLX + Ge/CrystalGroup{block_num}/MarginVert mm
+d:Ge/CrystalGroup{block_num}/DeltaY                = Ge/CrystalGroup{block_num}/CrystalLY + Ge/CrystalGroup{block_num}/MarginHoriz mm
 s:Ge/CrystalGroup{block_num}/CrystalMaterial       = "BGO"
 	"""
 
@@ -82,8 +89,8 @@ s:Ge/CrystalGroup{block_num}/CrystalMaterial       = "BGO"
 s:Ge/Crystal{block_num}r{row}c{col}/Type                    = "TsBox"
 s:Ge/Crystal{block_num}r{row}c{col}/Parent                  = "CrystalGroup{block_num}"
 s:Ge/Crystal{block_num}r{row}c{col}/Material                = Ge/CrystalGroup{block_num}/CrystalMaterial
-d:Ge/Crystal{block_num}r{row}c{col}/TransX                  = Ge/CrystalGroup{block_num}/DeltaX mm * Ge/Crystal1r0c0/VertOffset
-d:Ge/Crystal{block_num}r{row}c{col}/TransY                  = Ge/CrystalGroup{block_num}/DeltaY mm * Ge/Crystal1r0c0/HorizOffset
+d:Ge/Crystal{block_num}r{row}c{col}/TransX                  = Ge/CrystalGroup{block_num}/DeltaX mm * Ge/Crystal{block_num}r{row}c{col}/VertOffset
+d:Ge/Crystal{block_num}r{row}c{col}/TransY                  = Ge/CrystalGroup{block_num}/DeltaY mm * Ge/Crystal{block_num}r{row}c{col}/HorizOffset
 d:Ge/Crystal{block_num}r{row}c{col}/TransZ                  = Ge/CrystalGroup{block_num}/CrystalHLZ mm
 d:Ge/Crystal{block_num}r{row}c{col}/RotX                    = 0 deg
 d:Ge/Crystal{block_num}r{row}c{col}/RotY                    = 0 deg
@@ -94,6 +101,15 @@ d:Ge/Crystal{block_num}r{row}c{col}/HLZ                     = Ge/CrystalGroup{bl
 u:Ge/Crystal{block_num}r{row}c{col}/HorizOffset             = Ge/CrystalGroup{block_num}/FirstPosHoriz + {col}
 u:Ge/Crystal{block_num}r{row}c{col}/VertOffset              = Ge/CrystalGroup{block_num}/FirstPosVert + {row}
 
+s:Ge/Target{block_num}r{row}c{col}/Type="TsSphere"
+s:Ge/Target{block_num}r{row}c{col}/Parent="CrystalGroup{block_num}"
+s:Ge/Target{block_num}r{row}c{col}/Material="Air"
+d:Ge/Target{block_num}r{row}c{col}/RMax=1.0 mm
+d:Ge/Target{block_num}r{row}c{col}/RMin=0.5 mm
+d:Ge/Target{block_num}r{row}c{col}{block_num}r{row}c{col}/TransX = 0 m
+d:Ge/Target{block_num}r{row}c{col}/TransY = 0 m
+d:Ge/Target{block_num}r{row}c{col}/TransZ = 0 m
+s:Ge/Target{block_num}r{row}c{col}/Color = "Red"
 
 s:Sc/CrystalScore{block_num}r{row}c{col}/Quantity                  = "EnergyDeposit"
 s:Sc/CrystalScore{block_num}r{row}c{col}/Component                 = "Crystal{block_num}r{row}c{col}"
