@@ -1,0 +1,3 @@
+includeFile = MyCollimator.txt
+
+s:Ge/MyBox/Type = "MyCollimatorPVPlacement"

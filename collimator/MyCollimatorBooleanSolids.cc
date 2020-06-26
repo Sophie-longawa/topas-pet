@@ -1,30 +1,32 @@
-// Component for MyCollimator
+// Component for MyCollimatorBooleanSolids
 
-#include "MyCollimator.hh"
+#include "MyCollimatorBooleanSolids.hh"
 
 #include "TsParameterManager.hh"
 
 #include "G4LogicalVolume.hh"
 #include "G4Box.hh"
 #include "G4SystemOfUnits.hh"
-#include "G4PVPlacement.hh"
+#include "G4SubtractionSolid.hh"
 
-MyCollimator::MyCollimator(TsParameterManager* pM, TsExtensionManager* eM, TsMaterialManager* mM, TsGeometryManager* gM,
+MyCollimatorBooleanSolids::MyCollimatorBooleanSolids(TsParameterManager* pM, TsExtensionManager* eM, TsMaterialManager* mM, TsGeometryManager* gM,
                                        TsVGeometryComponent* parentComponent, G4VPhysicalVolume* parentVolume, G4String& name):
 TsVGeometryComponent(pM, eM, mM, gM, parentComponent, parentVolume, name)
 {;}
 
-MyCollimator::~MyCollimator() {;}
+MyCollimatorBooleanSolids::~MyCollimatorBooleanSolids() {;}
 
-G4VPhysicalVolume* MyCollimator::Construct() {
+G4VPhysicalVolume* MyCollimatorBooleanSolids::Construct() {
     BeginConstruction();
 
-//  const G4String OpeningMaterial = fPm->ParameterExists(GetFullParmName("OpeningMaterial")) ? fPm->GetStrkngParameter(GetFullParmName("OpeningMaterial")) : "G4_AIR";
-    const G4String CollimatorMaterial = fPm->GetStringParameter(GetFullParmName("Material"));
+    G4String CollimatorMaterial = fPm->GetStringParameter(GetFullParmName("Material"));
 
-    const G4int AxisXCuts = fPm->ParameterExists(GetFullParmName("AxisXCuts")) ? fPm->GetIntegerParameter(GetFullParmName("AxisXCuts")) : 1;
-    const G4int AxisYCuts = fPm->ParameterExists(GetFullParmName("AxisYCuts")) ? fPm->GetIntegerParameter(GetFullParmName("AxisYCuts")) : 1;
-    const G4int AxisZCuts = fPm->ParameterExists(GetFullParmName("AxisZCuts")) ? fPm->GetIntegerParameter(GetFullParmName("AxisZCuts")) : 1;
+    const G4int AxisXCuts = fPm->ParameterExists(GetFullParmName("AxisXCuts")) ? 
+                            fPm->GetIntegerParameter(GetFullParmName("AxisXCuts")) : 1;
+    const G4int AxisYCuts = fPm->ParameterExists(GetFullParmName("AxisYCuts")) ? 
+                            fPm->GetIntegerParameter(GetFullParmName("AxisYCuts")) : 1;
+    const G4int AxisZCuts = fPm->ParameterExists(GetFullParmName("AxisZCuts")) ? 
+                            fPm->GetIntegerParameter(GetFullParmName("AxisZCuts")) : 1;
 
     G4cerr << "The cuts are: " << AxisXCuts << ' ' << AxisYCuts << ' ' << AxisZCuts << '\n';
 
@@ -52,9 +54,12 @@ G4VPhysicalVolume* MyCollimator::Construct() {
     const G4double HLY = fPm->GetDoubleParameter(GetFullParmName("HLY"),"Length");
     const G4double HLZ = fPm->GetDoubleParameter(GetFullParmName("HLZ"),"Length");
 
-    const G4double ThicknessAxisXPercentage = fPm->ParameterExists(GetFullParmName("ThicknessAxisXPercentage")) ? fPm->IGetUnitlessParameter(GetFullParmName("ThicknessAxisXPercentage")) : 0;
-    const G4double ThicknessAxisYPercentage = fPm->ParameterExists(GetFullParmName("ThicknessAxisYPercentage")) ? fPm->IGetUnitlessParameter(GetFullParmName("ThicknessAxisYPercentage")) : 0;
-    const G4double ThicknessAxisZPercentage = fPm->ParameterExists(GetFullParmName("ThicknessAxisZPercentage")) ? fPm->IGetUnitlessParameter(GetFullParmName("ThicknessAxisZPercentage")) : 0;
+    const G4double ThicknessAxisXPercentage = fPm->ParameterExists(GetFullParmName("ThicknessAxisXPercentage")) ? 
+                                              fPm->IGetUnitlessParameter(GetFullParmName("ThicknessAxisXPercentage")) : 0;
+    const G4double ThicknessAxisYPercentage = fPm->ParameterExists(GetFullParmName("ThicknessAxisYPercentage")) ? 
+                                              fPm->IGetUnitlessParameter(GetFullParmName("ThicknessAxisYPercentage")) : 0;
+    const G4double ThicknessAxisZPercentage = fPm->ParameterExists(GetFullParmName("ThicknessAxisZPercentage")) ? 
+                                              fPm->IGetUnitlessParameter(GetFullParmName("ThicknessAxisZPercentage")) : 0;
 
     const G4double HLXOfDummyBox = (1 - ThicknessAxisXPercentage) * HLX / AxisXCuts;
     const G4double HLYOfDummyBox = (1 - ThicknessAxisYPercentage) * HLY / AxisYCuts;
@@ -77,7 +82,7 @@ G4VPhysicalVolume* MyCollimator::Construct() {
                 G4VSolid* DeletedBox = new G4Box("Dummy Box", HLXOfDummyBox, HLYOfDummyBox, HLZOfDummyBox);
                 AnsBox = new G4SubtractionSolid(fName, AnsBox, DeletedBox, 0, BoxOffsets);
 
-                G4cerr << "AnsBox is = " << *AnsBox << G4endl;
+//              G4cerr << "AnsBox is = " << *AnsBox << G4endl;
             }
         }
     }

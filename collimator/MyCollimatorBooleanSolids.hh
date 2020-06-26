@@ -1,17 +1,14 @@
 // Extension for implementing the collimator like used in SPECT
 
-#ifndef MyCollimator_hh
-#define MyCollimator_hh
+#pragma once
 
 #include "TsVGeometryComponent.hh"
 
-class MyCollimator : public TsVGeometryComponent {
+class MyCollimatorBooleanSolids : public TsVGeometryComponent {
 public:
-    MyCollimator(TsParameterManager* pM, TsExtensionManager* eM, TsMaterialManager* mM, TsGeometryManager* gM,
+    MyCollimatorBooleanSolids(TsParameterManager* pM, TsExtensionManager* eM, TsMaterialManager* mM, TsGeometryManager* gM,
 					   TsVGeometryComponent* parentComponent, G4VPhysicalVolume* parentVolume, G4String& name);
-    ~MyCollimator();
+    ~MyCollimatorBooleanSolids();
     G4VPhysicalVolume* Construct();
 };
-
-#endif
 
