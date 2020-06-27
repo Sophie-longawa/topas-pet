@@ -3,7 +3,7 @@
 #b:Ts/PauseBeforeQuit = "True"
 #b:Ts/UseQt = "True"
 
-i:So/Demo/NumberOfHistoriesInRun = 10000
+i:So/Demo/NumberOfHistoriesInRun = 1
 s:So/Demo/Type = "Beam"
 s:So/Demo/Component = "BeamPosition"
 s:So/Demo/BeamParticle = "gamma"
@@ -14,14 +14,14 @@ d:Ge/World/HLX = 25 cm
 d:Ge/World/HLY = 25 cm
 d:Ge/World/HLZ = 25 cm
 
-#s:Ge/MyBox/Type = "MyCollimatorPVPlacement"
+s:Ge/MyBox/Type = "MyCollimator"
 s:Ge/MyBox/Parent = "World"
 s:Ge/MyBox/Material = "G4_Al"
 d:Ge/MyBox/HLX = 5 cm
 d:Ge/MyBox/HLY = 7.5 cm
 d:Ge/MyBox/HLZ = 20 cm
-i:Ge/MyBox/AxisYCuts = 50
-i:Ge/MyBox/AxisXCuts = 50
+i:Ge/MyBox/AxisYCuts = 300
+i:Ge/MyBox/AxisXCuts = 300
 u:Ge/MyBox/ThicknessAxisXPercentage = 0.05
 u:Ge/MyBox/ThicknessAxisYPercentage = 0.1
 d:Ge/MyBox/SmallHLX = 1.5 cm

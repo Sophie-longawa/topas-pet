@@ -1,7 +1,7 @@
-// Component for MyCollimatorPVPlacement
+// Component for MyCollimator
 
 
-#include "MyCollimatorPVPlacement.hh"
+#include "MyCollimator.hh"
 
 #include "TsParameterManager.hh"
 
@@ -13,18 +13,14 @@
 #include <string>
 #include <thread>
 
-MyCollimatorPVPlacement::MyCollimatorPVPlacement(TsParameterManager* pM, TsExtensionManager* eM, TsMaterialManager* mM, TsGeometryManager* gM,
+MyCollimator::MyCollimator(TsParameterManager* pM, TsExtensionManager* eM, TsMaterialManager* mM, TsGeometryManager* gM,
                                        TsVGeometryComponent* parentComponent, G4VPhysicalVolume* parentVolume, G4String& name):
 TsVGeometryComponent(pM, eM, mM, gM, parentComponent, parentVolume, name)
 {;}
 
-MyCollimatorPVPlacement::~MyCollimatorPVPlacement() {;}
+MyCollimator::~MyCollimator() {;}
 
-G4String GetOpeningID(int i, int j, int k, G4String fName) {
-    return G4String("OpeningOfCollimator_") + fName + G4String("_"  + std::to_string(i) + "_" + std::to_string(j) + "_" + std::to_string(k));
-}
-
-G4VPhysicalVolume* MyCollimatorPVPlacement::Construct() {
+G4VPhysicalVolume* MyCollimator::Construct() {
 
     G4cerr << "Starting constructing collimator " << fName << G4endl;
 
@@ -93,20 +89,20 @@ G4VPhysicalVolume* MyCollimatorPVPlacement::Construct() {
      *  shape and will have by default Air Material (as Jan suggested).
      */
 
+    G4VSolid* DeletedBox = new G4Box("Dummy Box", HLXOfDummyBox, HLYOfDummyBox, HLZOfDummyBox);
+    
     for (int i = 0;i < AxisXCuts;i++) {
         const G4double XCenter = (2 * i + 1) * (HLX / AxisXCuts) - HLX;
         for (int j = 0;j < AxisYCuts;j++) {    
             const G4double YCenter = (2 * j + 1) * (HLY / AxisYCuts) - HLY;
             for (int k = 0;k < AxisZCuts;k++) {
                 const G4double ZCenter = (2 * k + 1) * (HLZ / AxisZCuts) - HLZ;
-                const G4ThreeVector BoxOffsets = G4ThreeVector(XCenter, YCenter, ZCenter);
+                G4ThreeVector* BoxOffsets = new G4ThreeVector(XCenter, YCenter, ZCenter);
 
-                G4VSolid* DeletedBox = new G4Box("Dummy Box", HLXOfDummyBox, HLYOfDummyBox, HLZOfDummyBox);
-
-                G4LogicalVolume*  DeletedBoxLogicalVolume = CreateLogicalVolume(GetOpeningID(i, j, k, fName), OpeningMaterial, DeletedBox);
+                G4LogicalVolume* DeletedBoxLogicalVolume = CreateLogicalVolume(ID, OpeningMaterial, DeletedBox);
                 
                 //We don't need to pointer to the opening
-                new G4PVPlacement(0, BoxOffsets, fName, DeletedBoxLogicalVolume, fEnvelopePhys, false, 1);
+                CreatePhysicalVolume("Dummy opening", i * AxisYCuts * AxisZCuts + j * AxisZCuts + k, true, DeletedBoxLogicalVolume, 0, BoxOffsets, fEnvelopePhys);
             }
         }
     }
