@@ -19,6 +19,8 @@
 #include "G4Box.hh"
 #include "G4UIcommand.hh"
 #include "G4SystemOfUnits.hh"
+#include <math.h>
+#include "G4VisAttributes.hh"
 
 PETScanner::PETScanner(TsParameterManager* pM, TsExtensionManager* eM, TsMaterialManager* mM, TsGeometryManager* gM,
 								 TsVGeometryComponent* parentComponent, G4VPhysicalVolume* parentVolume, G4String& name)
@@ -31,6 +33,10 @@ PETScanner::~PETScanner()
 
 void PETScanner::UpdateForSpecificParameterChange(G4String parameter)
 {
+	TsVGeometryComponent::UpdateForSpecificParameterChange(parameter);
+
+	/*
+
 	if (parameter == GetFullParmNameLower("XPlusLeavesOpen") || parameter == GetFullParmNameLower("XMinusLeavesOpen")) {
 		XPlusLeavesOpen  = fPm->GetDoubleVector(GetFullParmName("XPlusLeavesOpen"), "Length");
 		XMinusLeavesOpen = fPm->GetDoubleVector(GetFullParmName("XMinusLeavesOpen"), "Length");
@@ -56,14 +62,195 @@ void PETScanner::UpdateForSpecificParameterChange(G4String parameter)
 		// For any other parameters, fall back to the base class Update method
 		TsVGeometryComponent::UpdateForSpecificParameterChange(parameter);
 	}
+	*/
 }
 
 
 G4VPhysicalVolume* PETScanner::Construct()
 {
 	BeginConstruction();
+
+
+	//Crystals.clear();
+
+	//load in parameters
+
+	NbDetectorBlocksPerRing = fPm->GetIntegerParameter(GetFullParmName("DetectorBlocksPerRing"));
+	NbRings                 = fPm->GetIntegerParameter(GetFullParmName("Rings"));
+
+	NbCrystalsHorizontal    = fPm->GetIntegerParameter(GetFullParmName("CrystalsHorizontal"));
+	NbCrystalsVertical      = fPm->GetIntegerParameter(GetFullParmName("CrystalsVertical"));
+
+	MarginHorizontal        = fPm->GetDoubleParameter(GetFullParmName("MarginHorizontal"), "Length");
+	MarginVertical          = fPm->GetDoubleParameter(GetFullParmName("MarginVertical"), "Length");
+
+	MarginRings             = fPm->GetDoubleParameter(GetFullParmName("MarginRings"), "Length");
+
+	MarginBlocks            = fPm->GetDoubleParameter(GetFullParmName("MarginBlocks"), "Length");
+
+	Crystallx               = fPm->GetDoubleParameter(GetFullParmName("CrystalLX"), "Length");
+	Crystally               = fPm->GetDoubleParameter(GetFullParmName("CrystalLY"), "Length");
+	Crystallz               = fPm->GetDoubleParameter(GetFullParmName("CrystalLZ"), "Length");
+
+	//Crystallz               = fPm->GetDoubleParameter(GetFullParmName("CrystalLZ"), "Length");
+
+	
+
+
+	G4double detectorHLX = (Crystallx * NbCrystalsVertical   + MarginVertical   * (NbCrystalsVertical   - 1)) * .5;
+	G4double detectorHLY = (Crystally * NbCrystalsHorizontal + MarginHorizontal * (NbCrystalsHorizontal - 1)) * .5;
+	G4double detectorHLZ = Crystallz * .5;
+
+	G4String envelopeMaterialName = fParentComponent->GetResolvedMaterialName();
+
+	G4double ringRadius = (detectorHLX + MarginBlocks) / std::sin(M_PI/NbDetectorBlocksPerRing);
+
+
+
+	G4String crystalMaterialName = GetResolvedMaterialName();
+
+	G4VSolid* crystalSolid =  new G4Box("crystal", Crystallx*.5, Crystally*.5, Crystallz*.5);
+
+	G4LogicalVolume* crystalLV = CreateLogicalVolume("crystal", crystalMaterialName, crystalSolid);
+
+
+
+
+
+	G4VSolid* detectorSolid =  new G4Box("detector", detectorHLX, detectorHLY, detectorHLZ);
+
+	G4LogicalVolume* detectorLV = CreateLogicalVolume("detector", envelopeMaterialName, detectorSolid);
+
+	G4VisAttributes* yokeColor = new G4VisAttributes(G4Colour(0.2, 1.0, 0.2)); // Sets RGB color
+	RegisterVisAtt(yokeColor); // Necessary so that TOPAS can delete the attribute if the component is rebuild during 4D behavior
+	detectorLV->SetVisAttributes(yokeColor);
+
+	G4double angleIncrement = M_PI * 2 / NbDetectorBlocksPerRing;
+
+	G4VSolid* encapuslatingTube = new G4Tubs("petScanner", 0,//ringRadius,    // inner radius
+											 2*(ringRadius + Crystallz) * std::cos(M_PI/NbDetectorBlocksPerRing),    // outer radius
+											 (NbRings*.5 + .5) * (detectorHLY * 2 + MarginRings) * 2,    // height
+											 0.0,  2 * M_PI);  // segment angles
+
+	fEnvelopeLog = CreateLogicalVolume(fName, envelopeMaterialName, encapuslatingTube);
+	fEnvelopePhys = CreatePhysicalVolume(fEnvelopeLog);
+
+
+
+	/*
+	G4VSolid* crystalTube = new G4Tubs("frick", (ringRadius + (ringRadius + Crystallz) * std::cos(M_PI/NbDetectorBlocksPerRing))/2,    // inner radius
+											 (ringRadius + Crystallz) * std::cos(M_PI/NbDetectorBlocksPerRing),    // outer radius
+											 (NbRings*.5 + .5) * (detectorHLY * 2 + MarginRings),    // height
+											 0.0,  2 * M_PI);  // segment angles
+
+	G4LogicalVolume* tubeLV = CreateLogicalVolume("frick", crystalMaterialName, crystalTube);
+
+	CreatePhysicalVolume("frick", tubeLV, fEnvelopePhys);
+	*/
+
+	G4int ringNum = 0;
+	G4int detectorNum = 0;
+	G4int crystalNum = 0;
+
+	for(int ring_index = 0; ring_index < NbRings; ring_index++) {
+
+		G4double detectorTransY = (-NbRings*.5 + .5 + ring_index) * (detectorHLY * 2 + MarginRings);
+
+		for(int detector_index = 0; detector_index < NbDetectorBlocksPerRing; detector_index++) {
+
+			G4double detectorTransX = ringRadius * (std::sin(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.sin(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
+			//y defined above
+			G4double detectorTransZ = ringRadius * (std::cos(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.cos(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
+
+			G4double rotationAngle = M_PI * .5 + angleIncrement * detector_index;
+
+			G4RotationMatrix detectorRotation = G4RotationMatrix();
+			detectorRotation.rotateY(rotationAngle);
+
+			G4ThreeVector trans(detectorTransX, detectorTransY, detectorTransZ);
+
+			G4cout << "Making detector: " << detectorNum << G4endl;
+
+			G4String detector_string = "detector"+G4UIcommand::ConvertToString(detectorNum);
+
+			G4VPhysicalVolume* detectorPV = CreatePhysicalVolume(detector_string, detectorNum++, true, detectorLV, &detectorRotation, &trans, fEnvelopePhys);
+
+
+			for(int row = 0; row < NbCrystalsVertical; row++) {
+				for(int col = 0; col < NbCrystalsVertical; col++) {
+
+					//int n = sprintf (crystalNameBuffer, "%sr%dd%dr%dc%d", crystalName, ring_index, detector_index, row, col);
+
+					G4RotationMatrix crystalRotation = G4RotationMatrix();//no rotation
+
+					G4double xOffset = Crystallx + MarginVertical;
+					G4double yOffset = Crystally + MarginHorizontal;
+
+					G4double numXOffsets = (-0.5 * NbCrystalsVertical   + .5) + row;
+					G4double numYOffsets = (-0.5 * NbCrystalsHorizontal + .5) + col;
+
+					G4double xPos = numXOffsets * xOffset;
+					G4double yPos = numYOffsets * yOffset;
+					G4double zPos = Crystallz * .5;
+
+					G4ThreeVector crystalPos(xPos, yPos, zPos);
+
+					G4cout << "Making crystal: " << crystalNum << G4endl;
+
+					G4String crystalVolName = "crystal"+G4UIcommand::ConvertToString(crystalNum);
+
+					CreatePhysicalVolume(crystalVolName, crystalNum++, true, crystalLV, &crystalRotation, &crystalPos, detectorPV);
+
+
+				}
+			}
+
+
+
+		}
+	}
+
+	return fEnvelopePhys;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*
+
 	XPlusLeaves.clear();
 	XMinusLeaves.clear();
+
+
 	//Count leaves
 	NbOfLeavesPerSide = fPm->GetVectorLength(GetFullParmName("Widths"));
 	const G4int n_xl = fPm->GetVectorLength(GetFullParmName("XPlusLeavesOpen"));
@@ -132,4 +319,5 @@ G4VPhysicalVolume* PETScanner::Construct()
 	XMinusLeaves.push_back(pMinusLeaf);
 	}
 	return fEnvelopePhys;
+	*/
 }

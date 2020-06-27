@@ -26,13 +26,41 @@ public:
 	void UpdateForSpecificParameterChange(G4String parameter);
 
 private:
-	 G4double  LeafHalfLength;
-	 G4double  MaximumLeafOpen;
-	 G4double* XPlusLeavesOpen;
-	 G4double* XMinusLeavesOpen;
-	 std::vector<G4VPhysicalVolume*> XPlusLeaves;
-	 std::vector<G4VPhysicalVolume*> XMinusLeaves;
-	 G4int NbOfLeavesPerSide;
+	G4double  LeafHalfLength;
+	G4double  MaximumLeafOpen;
+	G4double* XPlusLeavesOpen;
+	G4double* XMinusLeavesOpen;
+	std::vector<G4VPhysicalVolume*> XPlusLeaves;
+	std::vector<G4VPhysicalVolume*> XMinusLeaves;
+	G4int NbOfLeavesPerSide;
+
+
+	//4D vector
+	//vector of rings
+	//which is a vector of blocks
+	//which is a 2D vector of crystals in a grid
+	std::vector<std::vector<std::vector<std::vector<G4VPhysicalVolume*>>>> Crystals;
+	G4int NbDetectorBlocksPerRing;
+	G4int NbRings;
+
+	//number of crystals per detector in the horizontal direction
+	G4int NbCrystalsHorizontal;
+	G4int NbCrystalsVertical;
+
+	//distance between crystals in the horizontal direction
+	G4double MarginHorizontal;
+	G4double MarginVertical;
+
+	//distance between rings of detectors
+	G4double MarginRings;
+
+	//distance between adjacent detector blocks in same ring
+	G4double MarginBlocks;
+
+	//dimensions of crystals
+	G4double Crystallx;
+	G4double Crystally;
+	G4double Crystallz;
 };
 
 #endif
