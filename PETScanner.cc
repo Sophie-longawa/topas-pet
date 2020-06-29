@@ -156,11 +156,11 @@ G4VPhysicalVolume* PETScanner::Construct()
 
 		G4double detectorTransY = (-NbRings*.5 + .5 + ring_index) * (detectorHLY * 2 + MarginRings);
 
-		for(int detector_index = 0; detector_index < NbDetectorBlocksPerRing; detector_index++) {
+		for(int detector_index = 0; detector_index < 1/*NbDetectorBlocksPerRing*/; detector_index++) {
 
-			G4double detectorTransX = ringRadius * (std::sin(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.sin(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
+			G4double detectorTransX = (ringRadius + detectorHLZ) * (std::sin(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.sin(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
 			//y defined above
-			G4double detectorTransZ = ringRadius * (std::cos(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.cos(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
+			G4double detectorTransZ = (ringRadius + detectorHLZ) * (std::cos(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.cos(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
 
 			G4double rotationAngle = M_PI * .5 + angleIncrement * detector_index;
 
@@ -176,8 +176,8 @@ G4VPhysicalVolume* PETScanner::Construct()
 			G4VPhysicalVolume* detectorPV = CreatePhysicalVolume(detector_string, detectorNum++, true, detectorLV, &detectorRotation, &trans, fEnvelopePhys);
 
 
-			for(int row = 0; row < NbCrystalsVertical; row++) {
-				for(int col = 0; col < NbCrystalsVertical; col++) {
+			for(int row = 0; row < 1/*NbCrystalsVertical*/; row++) {
+				for(int col = 0; col < 1/*NbCrystalsVertical*/; col++) {
 
 					//int n = sprintf (crystalNameBuffer, "%sr%dd%dr%dc%d", crystalName, ring_index, detector_index, row, col);
 
@@ -191,7 +191,7 @@ G4VPhysicalVolume* PETScanner::Construct()
 
 					G4double xPos = numXOffsets * xOffset;
 					G4double yPos = numYOffsets * yOffset;
-					G4double zPos = Crystallz * .5;
+					G4double zPos = 0;//Crystallz * .5;
 
 					G4ThreeVector crystalPos(xPos, yPos, zPos);
 
