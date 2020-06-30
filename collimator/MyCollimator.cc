@@ -8,10 +8,10 @@
 #include "G4LogicalVolume.hh"
 #include "G4Box.hh"
 #include "G4SystemOfUnits.hh"
-#include "G4PVPlacement.hh"
+#include "G4ThreeVector.hh"
+#include "G4RotationMatrix.hh"
 
 #include <string>
-#include <thread>
 
 MyCollimator::MyCollimator(TsParameterManager* pM, TsExtensionManager* eM, TsMaterialManager* mM, TsGeometryManager* gM,
                                        TsVGeometryComponent* parentComponent, G4VPhysicalVolume* parentVolume, G4String& name):
@@ -27,7 +27,7 @@ G4VPhysicalVolume* MyCollimator::Construct() {
     BeginConstruction();
 
     G4String OpeningMaterial = fPm->ParameterExists(GetFullParmName("OpeningMaterial")) ? 
-                                     fPm->GetStringParameter(GetFullParmName("OpeningMaterial")) : "G4_AIR";
+                                     fPm->GetStringParameter(GetFullParmName("OpeningMaterial")) : fParentComponent->GetResolvedMaterialName();
     
     G4String CollimatorMaterial = fPm->GetStringParameter(GetFullParmName("Material"));
 
@@ -81,6 +81,20 @@ G4VPhysicalVolume* MyCollimator::Construct() {
 
     G4cerr << "Found that HLX, HLY, HLZ = " << HLX << ' ' << HLY << ' ' << HLZ << '\n';
 
+    const G4double TransX = fPm->ParameterExists(GetFullParmName("TransX")) ?
+                            fPm->GetDoubleParameter(GetFullParmName("TransX"), "Length") : 0;
+    const G4double TransY = fPm->ParameterExists(GetFullParmName("TransY")) ?
+                            fPm->GetDoubleParameter(GetFullParmName("TransY"), "Length") : 0;
+    const G4double TransZ = fPm->ParameterExists(GetFullParmName("TransZ")) ?
+                            fPm->GetDoubleParameter(GetFullParmName("TransZ"), "Length") : 0;
+
+    const G4double RotX = fPm->ParameterExists(GetFullParmName("RotX")) ? 
+                          fPm->GetDoubleParameter(GetFullParmName("RotX"), "Angle") : 0;
+    const G4double RotY = fPm->ParameterExists(GetFullParmName("RotY")) ? 
+                          fPm->GetDoubleParameter(GetFullParmName("RotY"), "Angle") : 0;
+    const G4double RotZ = fPm->ParameterExists(GetFullParmName("RotZ")) ? 
+                          fPm->GetDoubleParameter(GetFullParmName("RotZ"), "Angle") : 0;
+    
     fEnvelopeLog = CreateLogicalVolume(fName, CollimatorMaterial, new G4Box(fName, HLX, HLY, HLZ));
     fEnvelopePhys = CreatePhysicalVolume(fEnvelopeLog);
     
@@ -89,20 +103,18 @@ G4VPhysicalVolume* MyCollimator::Construct() {
      *  shape and will have by default Air Material (as Jan suggested).
      */
 
-    G4VSolid* DeletedBox = new G4Box("Dummy Box", HLXOfDummyBox, HLYOfDummyBox, HLZOfDummyBox);
-    
+    G4VSolid* DeletedBox = new G4Box("Deleted Box", HLXOfDummyBox, HLYOfDummyBox, HLZOfDummyBox);
+    G4LogicalVolume* DeletedBoxLogicalVolume = CreateLogicalVolume(ID, OpeningMaterial, DeletedBox);
+    G4RotationMatrix* BoxRotations = new G4RotationMatrix(RotX, RotY, RotZ);
+
     for (int i = 0;i < AxisXCuts;i++) {
         const G4double XCenter = (2 * i + 1) * (HLX / AxisXCuts) - HLX;
         for (int j = 0;j < AxisYCuts;j++) {    
             const G4double YCenter = (2 * j + 1) * (HLY / AxisYCuts) - HLY;
             for (int k = 0;k < AxisZCuts;k++) {
                 const G4double ZCenter = (2 * k + 1) * (HLZ / AxisZCuts) - HLZ;
-                G4ThreeVector* BoxOffsets = new G4ThreeVector(XCenter, YCenter, ZCenter);
-
-                G4LogicalVolume* DeletedBoxLogicalVolume = CreateLogicalVolume(ID, OpeningMaterial, DeletedBox);
-                
-                //We don't need to pointer to the opening
-                CreatePhysicalVolume("Dummy opening", i * AxisYCuts * AxisZCuts + j * AxisZCuts + k, true, DeletedBoxLogicalVolume, 0, BoxOffsets, fEnvelopePhys);
+                G4ThreeVector* BoxOffsets = new G4ThreeVector(TransX + XCenter, TransY + YCenter, TransZ + ZCenter);
+                CreatePhysicalVolume("Dummy opening", i * AxisYCuts * AxisZCuts + j * AxisZCuts + k, true, DeletedBoxLogicalVolume, BoxRotations, BoxOffsets, fEnvelopePhys);
             }
         }
     }
