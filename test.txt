@@ -1,0 +1,878 @@
+i:So/Demo/NumberOfHistoriesInRun = 1000 #Set number of primary protons to 1000
+d:So/Demo/BeamEnergy = 50 MeV
+s:So/Demo/BeamParticle = "proton"
+s:Gr/ViewA/Type = "OpenGL" #set up graphics
+b:Gr/ViewA/IncludeAxes = "True"
+d:Gr/ViewA/AxesSize = 50. cm
+s:Ge/World/Material = "Air"
+d:Ge/World/HLX=75.0 cm
+d:Ge/World/HLY=75.0 cm
+d:Ge/World/HLZ=75.0 cm
+#b:Ge/QuitIfOverlapDetected = "False"
+
+#=======Phantom==========
+s:Ge/Phantom/Type = "TsBox"
+s:Ge/Phantom/Parent = "World"
+s:Ge/Phantom/Material = "G4_WATER"
+d:Ge/Phantom/HLX = 10. cm
+d:Ge/Phantom/HLY = 10. cm
+d:Ge/Phantom/HLZ = 10. cm
+
+#=========Detector 1===========
+
+s:Ge/Detector1/Type = "MyCollimator"
+s:Ge/Detector1/Parent= "World"
+s:Ge/Detector1/Material = "Lead"
+d:Ge/Detector1/HLX=10.0 cm
+d:Ge/Detector1/HLY=5 cm
+d:Ge/Detector1/HLZ=5 cm
+i:Ge/Detector1/NbOfRows = 5
+d:Ge/Detector1/RotZ = 90. deg
+d:Ge/Detector1/TransY = 35.137 cm
+
+d:Ge/Detector1/Row1/RMin = 0.0 cm
+d:Ge/Detector1/Row1/RMax = .5 cm
+s:Ge/Detector1/Row1/Material = "Air"
+d:Ge/Detector1/Row1/HL = Ge/Detector1/HLX cm
+s:Ge/Detector1/Row1/Align = "X"
+dv:Ge/Detector1/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector1/Row1/PosZ = 0. cm
+
+d:Ge/Detector1/Row2/RMin = 0.0 cm
+d:Ge/Detector1/Row2/RMax = .5 cm
+s:Ge/Detector1/Row2/Material = "Air"
+d:Ge/Detector1/Row2/HL = Ge/Detector1/HLX cm
+s:Ge/Detector1/Row2/Align = "X"
+dv:Ge/Detector1/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector1/Row2/PosZ = -4. cm
+
+d:Ge/Detector1/Row3/RMin = 0.0 cm
+d:Ge/Detector1/Row3/RMax = .5 cm
+s:Ge/Detector1/Row3/Material = "Air"
+d:Ge/Detector1/Row3/HL = Ge/Detector1/HLX cm
+s:Ge/Detector1/Row3/Align = "X"
+dv:Ge/Detector1/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector1/Row3/PosZ = -2 cm
+
+d:Ge/Detector1/Row4/RMin = 0.0 cm
+d:Ge/Detector1/Row4/RMax = .5 cm
+s:Ge/Detector1/Row4/Material = "Air"
+d:Ge/Detector1/Row4/HL = Ge/Detector1/HLX cm
+s:Ge/Detector1/Row4/Align = "X"
+dv:Ge/Detector1/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector1/Row4/PosZ = 4 cm
+
+d:Ge/Detector1/Row5/RMin = 0.0 cm
+d:Ge/Detector1/Row5/RMax = .5 cm
+s:Ge/Detector1/Row5/Material = "Air"
+d:Ge/Detector1/Row5/HL = Ge/Detector1/HLX cm
+s:Ge/Detector1/Row5/Align = "X"
+dv:Ge/Detector1/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector1/Row5/PosZ = 2 cm
+
+
+#========Detector 2===========
+
+s:Ge/Detector2/Type = "MyCollimator"
+s:Ge/Detector2/Parent= "World"
+s:Ge/Detector2/Material = "Lead"
+d:Ge/Detector2/HLX=10.0 cm
+d:Ge/Detector2/HLY=5.0 cm
+d:Ge/Detector2/HLZ=5.0 cm
+i:Ge/Detector2/NbOfRows = 5
+d:Ge/Detector2/RotZ = 90. deg
+d:Ge/Detector2/TransY= -35.137 cm
+
+
+d:Ge/Detector2/Row1/RMin = 0.0 cm
+d:Ge/Detector2/Row1/RMax = .5 cm
+s:Ge/Detector2/Row1/Material = "Air"
+d:Ge/Detector2/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector2/Row1/Align = "X"
+dv:Ge/Detector2/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector2/Row1/PosZ = 0. cm
+
+d:Ge/Detector2/Row2/RMin = 0.0 cm
+d:Ge/Detector2/Row2/RMax = .5 cm
+s:Ge/Detector2/Row2/Material = "Air"
+d:Ge/Detector2/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector2/Row2/Align = "X"
+dv:Ge/Detector2/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector2/Row2/PosZ = -4 cm
+
+d:Ge/Detector2/Row3/RMin = 0.0 cm
+d:Ge/Detector2/Row3/RMax = .5 cm
+s:Ge/Detector2/Row3/Material = "Air"
+d:Ge/Detector2/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector2/Row3/Align = "X"
+dv:Ge/Detector2/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector2/Row3/PosZ = -2 cm
+
+d:Ge/Detector2/Row4/RMin = 0.0 cm
+d:Ge/Detector2/Row4/RMax = .5 cm
+s:Ge/Detector2/Row4/Material = "Air"
+d:Ge/Detector2/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector2/Row4/Align = "X"
+dv:Ge/Detector2/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector2/Row4/PosZ = 4 cm
+
+d:Ge/Detector2/Row5/RMin = 0.0 cm
+d:Ge/Detector2/Row5/RMax = .5 cm
+s:Ge/Detector2/Row5/Material = "Air"
+d:Ge/Detector2/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector2/Row5/Align = "X"
+dv:Ge/Detector2/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector2/Row5/PosZ = 2 cm
+
+
+#=======Detector 3=================
+
+s:Ge/Detector3/Type = "MyCollimator"
+s:Ge/Detector3/Parent= "World"
+s:Ge/Detector3/Material = "Lead"
+d:Ge/Detector3/HLX=10.0 cm
+d:Ge/Detector3/HLY=5.0 cm
+d:Ge/Detector3/HLZ=5.0 cm
+i:Ge/Detector3/NbOfRows = 5
+d:Ge/Detector3/RotZ = 0. deg
+d:Ge/Detector3/TransX= -35.137 cm
+
+
+d:Ge/Detector3/Row1/RMin = 0.0 cm
+d:Ge/Detector3/Row1/RMax = .5 cm
+s:Ge/Detector3/Row1/Material = "Air"
+d:Ge/Detector3/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector3/Row1/Align = "X"
+dv:Ge/Detector3/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector3/Row1/PosZ = 0. cm
+
+d:Ge/Detector3/Row2/RMin = 0.0 cm
+d:Ge/Detector3/Row2/RMax = .5 cm
+s:Ge/Detector3/Row2/Material = "Air"
+d:Ge/Detector3/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector3/Row2/Align = "X"
+dv:Ge/Detector3/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector3/Row2/PosZ = -4 cm
+
+d:Ge/Detector3/Row3/RMin = 0.0 cm
+d:Ge/Detector3/Row3/RMax = .5 cm
+s:Ge/Detector3/Row3/Material = "Air"
+d:Ge/Detector3/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector3/Row3/Align = "X"
+dv:Ge/Detector3/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector3/Row3/PosZ = -2 cm
+
+d:Ge/Detector3/Row4/RMin = 0.0 cm
+d:Ge/Detector3/Row4/RMax = .5 cm
+s:Ge/Detector3/Row4/Material = "Air"
+d:Ge/Detector3/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector3/Row4/Align = "X"
+dv:Ge/Detector3/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector3/Row4/PosZ = 4 cm
+
+d:Ge/Detector3/Row5/RMin = 0.0 cm
+d:Ge/Detector3/Row5/RMax = .5 cm
+s:Ge/Detector3/Row5/Material = "Air"
+d:Ge/Detector3/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector3/Row5/Align = "X"
+dv:Ge/Detector3/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector3/Row5/PosZ = 2 cm
+
+#=============Detector 4==============
+
+s:Ge/Detector4/Type = "MyCollimator"
+s:Ge/Detector4/Parent= "World"
+s:Ge/Detector4/Material = "Lead"
+d:Ge/Detector4/HLX= 10.0 cm
+d:Ge/Detector4/HLY= 5.0 cm
+d:Ge/Detector4/HLZ= 5.0 cm
+i:Ge/Detector4/NbOfRows = 5
+d:Ge/Detector4/RotZ = 0. deg
+d:Ge/Detector4/TransX= 35.137 cm
+
+d:Ge/Detector4/Row1/RMin = 0.0 cm
+d:Ge/Detector4/Row1/RMax = .5 cm
+s:Ge/Detector4/Row1/Material = "Air"
+d:Ge/Detector4/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector4/Row1/Align = "X"
+dv:Ge/Detector4/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector4/Row1/PosZ = 0. cm
+
+d:Ge/Detector4/Row2/RMin = 0.0 cm
+d:Ge/Detector4/Row2/RMax = .5 cm
+s:Ge/Detector4/Row2/Material = "Air"
+d:Ge/Detector4/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector4/Row2/Align = "X"
+dv:Ge/Detector4/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector4/Row2/PosZ = 4 cm
+
+d:Ge/Detector4/Row3/RMin = 0.0 cm
+d:Ge/Detector4/Row3/RMax = .5 cm
+s:Ge/Detector4/Row3/Material = "Air"
+d:Ge/Detector4/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector4/Row3/Align = "X"
+dv:Ge/Detector4/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector4/Row3/PosZ = 2 cm
+
+d:Ge/Detector4/Row4/RMin = 0.0 cm
+d:Ge/Detector4/Row4/RMax = .5 cm
+s:Ge/Detector4/Row4/Material = "Air"
+d:Ge/Detector4/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector4/Row4/Align = "X"
+dv:Ge/Detector4/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector4/Row4/PosZ = -4 cm
+
+d:Ge/Detector4/Row5/RMin = 0.0 cm
+d:Ge/Detector4/Row5/RMax = .5 cm
+s:Ge/Detector4/Row5/Material = "Air"
+d:Ge/Detector4/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector4/Row5/Align = "X"
+dv:Ge/Detector4/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector4/Row5/PosZ = -2 cm
+
+
+#======Detector 5=========
+
+s:Ge/Detector5/Type = "MyCollimator"
+s:Ge/Detector5/Parent= "World"
+s:Ge/Detector5/Material = "Lead"
+d:Ge/Detector5/HLX= 10.0 cm
+d:Ge/Detector5/HLY= 5.0 cm
+d:Ge/Detector5/HLZ= 5.0 cm
+i:Ge/Detector5/NbOfRows = 5
+d:Ge/Detector5/RotZ = -22.5 deg
+d:Ge/Detector5/TransX= 32.462355 cm
+d:Ge/Detector5/TransY = 13.446347763 cm
+
+d:Ge/Detector5/Row1/RMin = 0.0 cm
+d:Ge/Detector5/Row1/RMax = .5 cm
+s:Ge/Detector5/Row1/Material = "Air"
+d:Ge/Detector5/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector5/Row1/Align = "X"
+dv:Ge/Detector5/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector5/Row1/PosZ = 0. cm
+
+d:Ge/Detector5/Row2/RMin = 0.0 cm
+d:Ge/Detector5/Row2/RMax = .5 cm
+s:Ge/Detector5/Row2/Material = "Air"
+d:Ge/Detector5/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector5/Row2/Align = "X"
+dv:Ge/Detector5/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector5/Row2/PosZ = 4 cm
+
+d:Ge/Detector5/Row3/RMin = 0.0 cm
+d:Ge/Detector5/Row3/RMax = .5 cm
+s:Ge/Detector5/Row3/Material = "Air"
+d:Ge/Detector5/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector5/Row3/Align = "X"
+dv:Ge/Detector5/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector5/Row3/PosZ = 2 cm
+
+d:Ge/Detector5/Row4/RMin = 0.0 cm
+d:Ge/Detector5/Row4/RMax = .5 cm
+s:Ge/Detector5/Row4/Material = "Air"
+d:Ge/Detector5/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector5/Row4/Align = "X"
+dv:Ge/Detector5/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector5/Row4/PosZ = -4 cm
+
+d:Ge/Detector5/Row5/RMin = 0.0 cm
+d:Ge/Detector5/Row5/RMax = .5 cm
+s:Ge/Detector5/Row5/Material = "Air"
+d:Ge/Detector5/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector5/Row5/Align = "X"
+dv:Ge/Detector5/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector5/Row5/PosZ = -2 cm
+
+
+#===============Detector 6===========
+
+s:Ge/Detector6/Type = "MyCollimator"
+s:Ge/Detector6/Parent= "World"
+s:Ge/Detector6/Material = "Lead"
+d:Ge/Detector6/HLX= 10.0 cm
+d:Ge/Detector6/HLY= 5.0 cm
+d:Ge/Detector6/HLZ= 5.0 cm
+i:Ge/Detector6/NbOfRows = 5
+d:Ge/Detector6/RotZ = -45. deg
+d:Ge/Detector6/TransX= 24.84561 cm
+d:Ge/Detector6/TransY = 24.84561 cm
+
+d:Ge/Detector6/Row1/RMin = 0.0 cm
+d:Ge/Detector6/Row1/RMax = .5 cm
+s:Ge/Detector6/Row1/Material = "Air"
+d:Ge/Detector6/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector6/Row1/Align = "X"
+dv:Ge/Detector6/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector6/Row1/PosZ = 0. cm
+
+d:Ge/Detector6/Row2/RMin = 0.0 cm
+d:Ge/Detector6/Row2/RMax = .5 cm
+s:Ge/Detector6/Row2/Material = "Air"
+d:Ge/Detector6/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector6/Row2/Align = "X"
+dv:Ge/Detector6/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector6/Row2/PosZ = 4 cm
+
+d:Ge/Detector6/Row3/RMin = 0.0 cm
+d:Ge/Detector6/Row3/RMax = .5 cm
+s:Ge/Detector6/Row3/Material = "Air"
+d:Ge/Detector6/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector6/Row3/Align = "X"
+dv:Ge/Detector6/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector6/Row3/PosZ = 2 cm
+
+d:Ge/Detector6/Row4/RMin = 0.0 cm
+d:Ge/Detector6/Row4/RMax = .5 cm
+s:Ge/Detector6/Row4/Material = "Air"
+d:Ge/Detector6/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector6/Row4/Align = "X"
+dv:Ge/Detector6/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector6/Row4/PosZ = -4 cm
+
+d:Ge/Detector6/Row5/RMin = 0.0 cm
+d:Ge/Detector6/Row5/RMax = .5 cm
+s:Ge/Detector6/Row5/Material = "Air"
+d:Ge/Detector6/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector6/Row5/Align = "X"
+dv:Ge/Detector6/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector6/Row5/PosZ = -2 cm
+
+
+#==============Detector 7===========
+
+s:Ge/Detector7/Type = "MyCollimator"
+s:Ge/Detector7/Parent= "World"
+s:Ge/Detector7/Material = "Lead"
+d:Ge/Detector7/HLX= 10.0 cm
+d:Ge/Detector7/HLY= 5.0 cm
+d:Ge/Detector7/HLZ= 5.0 cm
+i:Ge/Detector7/NbOfRows = 5
+d:Ge/Detector7/RotZ = -67.5 deg
+d:Ge/Detector7/TransX= 13.4463477636 cm
+d:Ge/Detector7/TransY = 32.462355 cm
+
+d:Ge/Detector7/Row1/RMin = 0.0 cm
+d:Ge/Detector7/Row1/RMax = .5 cm
+s:Ge/Detector7/Row1/Material = "Air"
+d:Ge/Detector7/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector7/Row1/Align = "X"
+dv:Ge/Detector7/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector7/Row1/PosZ = 0. cm
+
+d:Ge/Detector7/Row2/RMin = 0.0 cm
+d:Ge/Detector7/Row2/RMax = .5 cm
+s:Ge/Detector7/Row2/Material = "Air"
+d:Ge/Detector7/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector7/Row2/Align = "X"
+dv:Ge/Detector7/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector7/Row2/PosZ = 4 cm
+
+d:Ge/Detector7/Row3/RMin = 0.0 cm
+d:Ge/Detector7/Row3/RMax = .5 cm
+s:Ge/Detector7/Row3/Material = "Air"
+d:Ge/Detector7/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector7/Row3/Align = "X"
+dv:Ge/Detector7/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector7/Row3/PosZ = 2 cm
+
+d:Ge/Detector7/Row4/RMin = 0.0 cm
+d:Ge/Detector7/Row4/RMax = .5 cm
+s:Ge/Detector7/Row4/Material = "Air"
+d:Ge/Detector7/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector7/Row4/Align = "X"
+dv:Ge/Detector7/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector7/Row4/PosZ = -4 cm
+
+d:Ge/Detector7/Row5/RMin = 0.0 cm
+d:Ge/Detector7/Row5/RMax = .5 cm
+s:Ge/Detector7/Row5/Material = "Air"
+d:Ge/Detector7/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector7/Row5/Align = "X"
+dv:Ge/Detector7/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector7/Row5/PosZ = -2 cm
+
+
+#===================Detector 8=================
+
+s:Ge/Detector8/Type = "MyCollimator"
+s:Ge/Detector8/Parent= "World"
+s:Ge/Detector8/Material = "Lead"
+d:Ge/Detector8/HLX= 10.0 cm
+d:Ge/Detector8/HLY= 5.0 cm
+d:Ge/Detector8/HLZ= 5.0 cm
+i:Ge/Detector8/NbOfRows = 5
+d:Ge/Detector8/RotZ = 45. deg
+d:Ge/Detector8/TransX= -24.84561 cm
+d:Ge/Detector8/TransY = 24.84561 cm
+
+d:Ge/Detector8/Row1/RMin = 0.0 cm
+d:Ge/Detector8/Row1/RMax = .5 cm
+s:Ge/Detector8/Row1/Material = "Air"
+d:Ge/Detector8/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector8/Row1/Align = "X"
+dv:Ge/Detector8/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector8/Row1/PosZ = 0. cm
+
+d:Ge/Detector8/Row2/RMin = 0.0 cm
+d:Ge/Detector8/Row2/RMax = .5 cm
+s:Ge/Detector8/Row2/Material = "Air"
+d:Ge/Detector8/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector8/Row2/Align = "X"
+dv:Ge/Detector8/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector8/Row2/PosZ = 4 cm
+
+d:Ge/Detector8/Row3/RMin = 0.0 cm
+d:Ge/Detector8/Row3/RMax = .5 cm
+s:Ge/Detector8/Row3/Material = "Air"
+d:Ge/Detector8/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector8/Row3/Align = "X"
+dv:Ge/Detector8/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector8/Row3/PosZ = 2 cm
+
+d:Ge/Detector8/Row4/RMin = 0.0 cm
+d:Ge/Detector8/Row4/RMax = .5 cm
+s:Ge/Detector8/Row4/Material = "Air"
+d:Ge/Detector8/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector8/Row4/Align = "X"
+dv:Ge/Detector8/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector8/Row4/PosZ = -4 cm
+
+d:Ge/Detector8/Row5/RMin = 0.0 cm
+d:Ge/Detector8/Row5/RMax = .5 cm
+s:Ge/Detector8/Row5/Material = "Air"
+d:Ge/Detector8/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector8/Row5/Align = "X"
+dv:Ge/Detector8/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector8/Row5/PosZ = -2 cm
+
+
+#==============Detector 9===========
+
+s:Ge/Detector9/Type = "MyCollimator"
+s:Ge/Detector9/Parent= "World"
+s:Ge/Detector9/Material = "Lead"
+d:Ge/Detector9/HLX= 10.0 cm
+d:Ge/Detector9/HLY= 5.0 cm
+d:Ge/Detector9/HLZ= 5.0 cm
+i:Ge/Detector9/NbOfRows = 5
+d:Ge/Detector9/RotZ = 67.5 deg
+d:Ge/Detector9/TransX= -13.4463477636 cm
+d:Ge/Detector9/TransY = 32.462355 cm
+
+d:Ge/Detector9/Row1/RMin = 0.0 cm
+d:Ge/Detector9/Row1/RMax = .5 cm
+s:Ge/Detector9/Row1/Material = "Air"
+d:Ge/Detector9/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector9/Row1/Align = "X"
+dv:Ge/Detector9/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector9/Row1/PosZ = 0. cm
+
+d:Ge/Detector9/Row2/RMin = 0.0 cm
+d:Ge/Detector9/Row2/RMax = .5 cm
+s:Ge/Detector9/Row2/Material = "Air"
+d:Ge/Detector9/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector9/Row2/Align = "X"
+dv:Ge/Detector9/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector9/Row2/PosZ = 4 cm
+
+d:Ge/Detector9/Row3/RMin = 0.0 cm
+d:Ge/Detector9/Row3/RMax = .5 cm
+s:Ge/Detector9/Row3/Material = "Air"
+d:Ge/Detector9/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector9/Row3/Align = "X"
+dv:Ge/Detector9/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector9/Row3/PosZ = 2 cm
+
+d:Ge/Detector9/Row4/RMin = 0.0 cm
+d:Ge/Detector9/Row4/RMax = .5 cm
+s:Ge/Detector9/Row4/Material = "Air"
+d:Ge/Detector9/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector9/Row4/Align = "X"
+dv:Ge/Detector9/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector9/Row4/PosZ = -4 cm
+
+d:Ge/Detector9/Row5/RMin = 0.0 cm
+d:Ge/Detector9/Row5/RMax = .5 cm
+s:Ge/Detector9/Row5/Material = "Air"
+d:Ge/Detector9/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector9/Row5/Align = "X"
+dv:Ge/Detector9/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector9/Row5/PosZ = -2 cm
+
+
+#==============Detector 10===========
+
+s:Ge/Detector10/Type = "MyCollimator"
+s:Ge/Detector10/Parent= "World"
+s:Ge/Detector10/Material = "Lead"
+d:Ge/Detector10/HLX= 10.0 cm
+d:Ge/Detector10/HLY= 5.0 cm
+d:Ge/Detector10/HLZ= 5.0 cm
+i:Ge/Detector10/NbOfRows = 5
+d:Ge/Detector10/RotZ = 22.5 deg
+d:Ge/Detector10/TransX= -32.45 cm
+d:Ge/Detector10/TransY = 13.446347763 cm
+
+d:Ge/Detector10/Row1/RMin = 0.0 cm
+d:Ge/Detector10/Row1/RMax = .5 cm
+s:Ge/Detector10/Row1/Material = "Air"
+d:Ge/Detector10/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector10/Row1/Align = "X"
+dv:Ge/Detector10/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector10/Row1/PosZ = 0. cm
+
+d:Ge/Detector10/Row2/RMin = 0.0 cm
+d:Ge/Detector10/Row2/RMax = .5 cm
+s:Ge/Detector10/Row2/Material = "Air"
+d:Ge/Detector10/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector10/Row2/Align = "X"
+dv:Ge/Detector10/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector10/Row2/PosZ = 4 cm
+
+d:Ge/Detector10/Row3/RMin = 0.0 cm
+d:Ge/Detector10/Row3/RMax = .5 cm
+s:Ge/Detector10/Row3/Material = "Air"
+d:Ge/Detector10/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector10/Row3/Align = "X"
+dv:Ge/Detector10/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector10/Row3/PosZ = 2 cm
+
+d:Ge/Detector10/Row4/RMin = 0.0 cm
+d:Ge/Detector10/Row4/RMax = .5 cm
+s:Ge/Detector10/Row4/Material = "Air"
+d:Ge/Detector10/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector10/Row4/Align = "X"
+dv:Ge/Detector10/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector10/Row4/PosZ = -4 cm
+
+d:Ge/Detector10/Row5/RMin = 0.0 cm
+d:Ge/Detector10/Row5/RMax = .5 cm
+s:Ge/Detector10/Row5/Material = "Air"
+d:Ge/Detector10/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector10/Row5/Align = "X"
+dv:Ge/Detector10/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector10/Row5/PosZ = -2 cm
+
+
+#==============Detector 11===========
+
+s:Ge/Detector11/Type = "MyCollimator"
+s:Ge/Detector11/Parent= "World"
+s:Ge/Detector11/Material = "Lead"
+d:Ge/Detector11/HLX= 10.0 cm
+d:Ge/Detector11/HLY= 5.0 cm
+d:Ge/Detector11/HLZ= 5.0 cm
+i:Ge/Detector11/NbOfRows = 5
+d:Ge/Detector11/RotZ = 22.5 deg
+d:Ge/Detector11/TransX= 32.462355 cm
+d:Ge/Detector11/TransY = -13.446347763 cm
+
+d:Ge/Detector11/Row1/RMin = 0.0 cm
+d:Ge/Detector11/Row1/RMax = .5 cm
+s:Ge/Detector11/Row1/Material = "Air"
+d:Ge/Detector11/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector11/Row1/Align = "X"
+dv:Ge/Detector11/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector11/Row1/PosZ = 0. cm
+
+d:Ge/Detector11/Row2/RMin = 0.0 cm
+d:Ge/Detector11/Row2/RMax = .5 cm
+s:Ge/Detector11/Row2/Material = "Air"
+d:Ge/Detector11/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector11/Row2/Align = "X"
+dv:Ge/Detector11/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector11/Row2/PosZ = 4 cm
+
+d:Ge/Detector11/Row3/RMin = 0.0 cm
+d:Ge/Detector11/Row3/RMax = .5 cm
+s:Ge/Detector11/Row3/Material = "Air"
+d:Ge/Detector11/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector11/Row3/Align = "X"
+dv:Ge/Detector11/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector11/Row3/PosZ = 2 cm
+
+d:Ge/Detector11/Row4/RMin = 0.0 cm
+d:Ge/Detector11/Row4/RMax = .5 cm
+s:Ge/Detector11/Row4/Material = "Air"
+d:Ge/Detector11/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector11/Row4/Align = "X"
+dv:Ge/Detector11/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector11/Row4/PosZ = -4 cm
+
+d:Ge/Detector11/Row5/RMin = 0.0 cm
+d:Ge/Detector11/Row5/RMax = .5 cm
+s:Ge/Detector11/Row5/Material = "Air"
+d:Ge/Detector11/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector11/Row5/Align = "X"
+dv:Ge/Detector11/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector11/Row5/PosZ = -2 cm
+
+
+#==============Detector 12===========
+
+s:Ge/Detector12/Type = "MyCollimator"
+s:Ge/Detector12/Parent= "World"
+s:Ge/Detector12/Material = "Lead"
+d:Ge/Detector12/HLX= 10.0 cm
+d:Ge/Detector12/HLY= 5.0 cm
+d:Ge/Detector12/HLZ= 5.0 cm
+i:Ge/Detector12/NbOfRows = 5
+d:Ge/Detector12/RotZ = -67.5 deg
+d:Ge/Detector12/TransX= -13.446347763 cm
+d:Ge/Detector12/TransY = -32.462355 cm
+
+d:Ge/Detector12/Row1/RMin = 0.0 cm
+d:Ge/Detector12/Row1/RMax = .5 cm
+s:Ge/Detector12/Row1/Material = "Air"
+d:Ge/Detector12/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector12/Row1/Align = "X"
+dv:Ge/Detector12/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector12/Row1/PosZ = 0. cm
+
+d:Ge/Detector12/Row2/RMin = 0.0 cm
+d:Ge/Detector12/Row2/RMax = .5 cm
+s:Ge/Detector12/Row2/Material = "Air"
+d:Ge/Detector12/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector12/Row2/Align = "X"
+dv:Ge/Detector12/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector12/Row2/PosZ = 4 cm
+
+d:Ge/Detector12/Row3/RMin = 0.0 cm
+d:Ge/Detector12/Row3/RMax = .5 cm
+s:Ge/Detector12/Row3/Material = "Air"
+d:Ge/Detector12/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector12/Row3/Align = "X"
+dv:Ge/Detector12/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector12/Row3/PosZ = 2 cm
+
+d:Ge/Detector12/Row4/RMin = 0.0 cm
+d:Ge/Detector12/Row4/RMax = .5 cm
+s:Ge/Detector12/Row4/Material = "Air"
+d:Ge/Detector12/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector12/Row4/Align = "X"
+dv:Ge/Detector12/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector12/Row4/PosZ = -4 cm
+
+d:Ge/Detector12/Row5/RMin = 0.0 cm
+d:Ge/Detector12/Row5/RMax = .5 cm
+s:Ge/Detector12/Row5/Material = "Air"
+d:Ge/Detector12/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector12/Row5/Align = "X"
+dv:Ge/Detector12/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector12/Row5/PosZ = -2 cm
+
+
+#==============Detector 13===========
+
+s:Ge/Detector13/Type = "MyCollimator"
+s:Ge/Detector13/Parent= "World"
+s:Ge/Detector13/Material = "Lead"
+d:Ge/Detector13/HLX= 10.0 cm
+d:Ge/Detector13/HLY= 5.0 cm
+d:Ge/Detector13/HLZ= 5.0 cm
+i:Ge/Detector13/NbOfRows = 5
+d:Ge/Detector13/RotZ = 45. deg
+d:Ge/Detector13/TransX= 24.84561 cm
+d:Ge/Detector13/TransY = -24.84561 cm
+
+d:Ge/Detector13/Row1/RMin = 0.0 cm
+d:Ge/Detector13/Row1/RMax = .5 cm
+s:Ge/Detector13/Row1/Material = "Air"
+d:Ge/Detector13/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector13/Row1/Align = "X"
+dv:Ge/Detector13/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector13/Row1/PosZ = 0. cm
+
+d:Ge/Detector13/Row2/RMin = 0.0 cm
+d:Ge/Detector13/Row2/RMax = .5 cm
+s:Ge/Detector13/Row2/Material = "Air"
+d:Ge/Detector13/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector13/Row2/Align = "X"
+dv:Ge/Detector13/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector13/Row2/PosZ = 4 cm
+
+d:Ge/Detector13/Row3/RMin = 0.0 cm
+d:Ge/Detector13/Row3/RMax = .5 cm
+s:Ge/Detector13/Row3/Material = "Air"
+d:Ge/Detector13/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector13/Row3/Align = "X"
+dv:Ge/Detector13/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector13/Row3/PosZ = 2 cm
+
+d:Ge/Detector13/Row4/RMin = 0.0 cm
+d:Ge/Detector13/Row4/RMax = .5 cm
+s:Ge/Detector13/Row4/Material = "Air"
+d:Ge/Detector13/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector13/Row4/Align = "X"
+dv:Ge/Detector13/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector13/Row4/PosZ = -4 cm
+
+d:Ge/Detector13/Row5/RMin = 0.0 cm
+d:Ge/Detector13/Row5/RMax = .5 cm
+s:Ge/Detector13/Row5/Material = "Air"
+d:Ge/Detector13/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector13/Row5/Align = "X"
+dv:Ge/Detector13/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector13/Row5/PosZ = -2 cm
+
+#==============Detector 14===========
+
+s:Ge/Detector14/Type = "MyCollimator"
+s:Ge/Detector14/Parent= "World"
+s:Ge/Detector14/Material = "Lead"
+d:Ge/Detector14/HLX= 10.0 cm
+d:Ge/Detector14/HLY= 5.0 cm
+d:Ge/Detector14/HLZ= 5.0 cm
+i:Ge/Detector14/NbOfRows = 5
+d:Ge/Detector14/RotZ = -22.5 deg
+d:Ge/Detector14/TransX= -32.462355 cm
+d:Ge/Detector14/TransY = -13.446347763 cm
+
+d:Ge/Detector14/Row1/RMin = 0.0 cm
+d:Ge/Detector14/Row1/RMax = .5 cm
+s:Ge/Detector14/Row1/Material = "Air"
+d:Ge/Detector14/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector14/Row1/Align = "X"
+dv:Ge/Detector14/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector14/Row1/PosZ = 0. cm
+
+d:Ge/Detector14/Row2/RMin = 0.0 cm
+d:Ge/Detector14/Row2/RMax = .5 cm
+s:Ge/Detector14/Row2/Material = "Air"
+d:Ge/Detector14/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector14/Row2/Align = "X"
+dv:Ge/Detector14/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector14/Row2/PosZ = 4 cm
+
+d:Ge/Detector14/Row3/RMin = 0.0 cm
+d:Ge/Detector14/Row3/RMax = .5 cm
+s:Ge/Detector14/Row3/Material = "Air"
+d:Ge/Detector14/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector14/Row3/Align = "X"
+dv:Ge/Detector14/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector14/Row3/PosZ = 2 cm
+
+d:Ge/Detector14/Row4/RMin = 0.0 cm
+d:Ge/Detector14/Row4/RMax = .5 cm
+s:Ge/Detector14/Row4/Material = "Air"
+d:Ge/Detector14/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector14/Row4/Align = "X"
+dv:Ge/Detector14/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector14/Row4/PosZ = -4 cm
+
+d:Ge/Detector14/Row5/RMin = 0.0 cm
+d:Ge/Detector14/Row5/RMax = .5 cm
+s:Ge/Detector14/Row5/Material = "Air"
+d:Ge/Detector14/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector14/Row5/Align = "X"
+dv:Ge/Detector14/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector14/Row5/PosZ = -2 cm
+
+#==============Detector 15===========
+
+s:Ge/Detector15/Type = "MyCollimator"
+s:Ge/Detector15/Parent= "World"
+s:Ge/Detector15/Material = "Lead"
+d:Ge/Detector15/HLX= 10.0 cm
+d:Ge/Detector15/HLY= 5.0 cm
+d:Ge/Detector15/HLZ= 5.0 cm
+i:Ge/Detector15/NbOfRows = 5
+d:Ge/Detector15/RotZ = -45. deg
+d:Ge/Detector15/TransX= -24.84561 cm
+d:Ge/Detector15/TransY = -24.84561 cm
+
+d:Ge/Detector15/Row1/RMin = 0.0 cm
+d:Ge/Detector15/Row1/RMax = .5 cm
+s:Ge/Detector15/Row1/Material = "Air"
+d:Ge/Detector15/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector15/Row1/Align = "X"
+dv:Ge/Detector15/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector15/Row1/PosZ = 0. cm
+
+d:Ge/Detector15/Row2/RMin = 0.0 cm
+d:Ge/Detector15/Row2/RMax = .5 cm
+s:Ge/Detector15/Row2/Material = "Air"
+d:Ge/Detector15/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector15/Row2/Align = "X"
+dv:Ge/Detector15/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector15/Row2/PosZ = 4 cm
+
+d:Ge/Detector15/Row3/RMin = 0.0 cm
+d:Ge/Detector15/Row3/RMax = .5 cm
+s:Ge/Detector15/Row3/Material = "Air"
+d:Ge/Detector15/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector15/Row3/Align = "X"
+dv:Ge/Detector15/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector15/Row3/PosZ = 2 cm
+
+d:Ge/Detector15/Row4/RMin = 0.0 cm
+d:Ge/Detector15/Row4/RMax = .5 cm
+s:Ge/Detector15/Row4/Material = "Air"
+d:Ge/Detector15/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector15/Row4/Align = "X"
+dv:Ge/Detector15/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector15/Row4/PosZ = -4 cm
+
+d:Ge/Detector15/Row5/RMin = 0.0 cm
+d:Ge/Detector15/Row5/RMax = .5 cm
+s:Ge/Detector15/Row5/Material = "Air"
+d:Ge/Detector15/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector15/Row5/Align = "X"
+dv:Ge/Detector15/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector15/Row5/PosZ = -2 cm
+
+#==============Detector 16===========
+
+s:Ge/Detector16/Type = "MyCollimator"
+s:Ge/Detector16/Parent= "World"
+s:Ge/Detector16/Material = "Lead"
+d:Ge/Detector16/HLX= 10.0 cm
+d:Ge/Detector16/HLY= 5.0 cm
+d:Ge/Detector16/HLZ= 5.0 cm
+i:Ge/Detector16/NbOfRows = 5
+d:Ge/Detector16/RotZ = 67.5 deg
+d:Ge/Detector16/TransX= 13.446347763 cm
+d:Ge/Detector16/TransY = -32.462355 cm
+
+d:Ge/Detector16/Row1/RMin = 0.0 cm
+d:Ge/Detector16/Row1/RMax = .5 cm
+s:Ge/Detector16/Row1/Material = "Air"
+d:Ge/Detector16/Row1/HL = Ge/Detector2/HLX cm
+s:Ge/Detector16/Row1/Align = "X"
+dv:Ge/Detector16/Row1/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector16/Row1/PosZ = 0. cm
+
+d:Ge/Detector16/Row2/RMin = 0.0 cm
+d:Ge/Detector16/Row2/RMax = .5 cm
+s:Ge/Detector16/Row2/Material = "Air"
+d:Ge/Detector16/Row2/HL = Ge/Detector2/HLX cm
+s:Ge/Detector16/Row2/Align = "X"
+dv:Ge/Detector16/Row2/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector16/Row2/PosZ = 4 cm
+
+d:Ge/Detector16/Row3/RMin = 0.0 cm
+d:Ge/Detector16/Row3/RMax = .5 cm
+s:Ge/Detector16/Row3/Material = "Air"
+d:Ge/Detector16/Row3/HL = Ge/Detector2/HLX cm
+s:Ge/Detector16/Row3/Align = "X"
+dv:Ge/Detector16/Row3/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector16/Row3/PosZ = 2 cm
+
+d:Ge/Detector16/Row4/RMin = 0.0 cm
+d:Ge/Detector16/Row4/RMax = .5 cm
+s:Ge/Detector16/Row4/Material = "Air"
+d:Ge/Detector16/Row4/HL = Ge/Detector2/HLX cm
+s:Ge/Detector16/Row4/Align = "X"
+dv:Ge/Detector16/Row4/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector16/Row4/PosZ = -4 cm
+
+d:Ge/Detector16/Row5/RMin = 0.0 cm
+d:Ge/Detector16/Row5/RMax = .5 cm
+s:Ge/Detector16/Row5/Material = "Air"
+d:Ge/Detector16/Row5/HL = Ge/Detector2/HLX cm
+s:Ge/Detector16/Row5/Align = "X"
+dv:Ge/Detector16/Row5/Displacement = 5 -4 -2 0 2 4 cm
+d:Ge/Detector16/Row5/PosZ = -2 cm
+
+b:Ts/PauseBeforeQuit = "True"
