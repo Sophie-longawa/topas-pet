@@ -81,6 +81,9 @@ b:Gr/ViewA/HiddenLineRemovalForTrajectories = "True"
 s:Gr/ViewA/Projection                       = "Perspective"
 d:Gr/ViewA/PerspectiveAngle                 = 30 deg
 b:Gr/ViewA/CopyOpenGLToEPS                  = "False"
+b:Gr/ViewA/IncludeAxes = "True" # defaults to "False"
+s:Gr/ViewA/AxesComponent = "World" # Component in which to center the axes. Defaults to World.
+d:Gr/ViewA/AxesSize = 40. mm # size of axes
 
 #sv:Ph/Default/Modules = 1 "g4em-standard_opt0"
 
