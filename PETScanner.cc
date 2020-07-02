@@ -97,9 +97,9 @@ G4VPhysicalVolume* PETScanner::Construct()
 	
 
 
-	G4double detectorHLX = (Crystallx * NbCrystalsVertical   + MarginVertical   * (NbCrystalsVertical   - 1)) * .5;
-	G4double detectorHLY = (Crystally * NbCrystalsHorizontal + MarginHorizontal * (NbCrystalsHorizontal - 1)) * .5;
-	G4double detectorHLZ = Crystallz * .5;
+	G4double detectorHLX = (Crystallx * NbCrystalsHorizontal + MarginHorizontal * (NbCrystalsHorizontal - 1)) * .5;
+	G4double detectorHLY = Crystally * .5;
+	G4double detectorHLZ = (Crystallz * NbCrystalsVertical   + MarginVertical   * (NbCrystalsVertical   - 1)) * .5;
 
 	G4String envelopeMaterialName = fParentComponent->GetResolvedMaterialName();
 
@@ -127,9 +127,9 @@ G4VPhysicalVolume* PETScanner::Construct()
 
 	G4double angleIncrement = M_PI * 2 / NbDetectorBlocksPerRing;
 
-	G4VSolid* encapuslatingTube = new G4Tubs("petScanner", 0,//ringRadius,    // inner radius
-											 2*(ringRadius + Crystallz) * std::cos(M_PI/NbDetectorBlocksPerRing),    // outer radius
-											 (NbRings*.5 + .5) * (detectorHLY * 2 + MarginRings) * 2,    // height
+	G4VSolid* encapuslatingTube = new G4Tubs("petScanner", ringRadius,    // inner radius
+											 (ringRadius + Crystally) * std::cos(M_PI/NbDetectorBlocksPerRing),    // outer radius
+											 (NbRings*.5 + .5) * (detectorHLZ * 2 + MarginRings) * 2,    // height
 											 0.0,  2 * M_PI);  // segment angles
 
 	fEnvelopeLog = CreateLogicalVolume(fName, envelopeMaterialName, encapuslatingTube);
@@ -154,13 +154,13 @@ G4VPhysicalVolume* PETScanner::Construct()
 
 	for(int ring_index = 0; ring_index < NbRings; ring_index++) {
 
-		G4double detectorTransY = (-NbRings*.5 + .5 + ring_index) * (detectorHLY * 2 + MarginRings);
+		G4double detectorTransZ = (-NbRings*.5 + .5 + ring_index) * (detectorHLZ * 2 + MarginRings);
 
 		for(int detector_index = 0; detector_index < 1/*NbDetectorBlocksPerRing*/; detector_index++) {
 
-			G4double detectorTransX = (ringRadius + detectorHLZ) * (std::sin(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.sin(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
+			G4double detectorTransX = (ringRadius + detectorHLY) * (std::sin(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.sin(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
 			//y defined above
-			G4double detectorTransZ = (ringRadius + detectorHLZ) * (std::cos(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.cos(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
+			G4double detectorTransY = (ringRadius + detectorHLY) * (std::cos(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.cos(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
 
 			G4double rotationAngle = M_PI * .5 + angleIncrement * detector_index;
 
@@ -183,15 +183,15 @@ G4VPhysicalVolume* PETScanner::Construct()
 
 					G4RotationMatrix crystalRotation = G4RotationMatrix();//no rotation
 
-					G4double xOffset = Crystallx + MarginVertical;
-					G4double yOffset = Crystally + MarginHorizontal;
+					G4double xOffset = Crystallx + MarginHorizontal;
+					G4double zOffset = Crystallz + MarginVertical;
 
-					G4double numXOffsets = (-0.5 * NbCrystalsVertical   + .5) + row;
-					G4double numYOffsets = (-0.5 * NbCrystalsHorizontal + .5) + col;
+					G4double numXOffsets = (-0.5 * NbCrystalsHorizontal + .5) + col;
+					G4double numZOffsets = (-0.5 * NbCrystalsVertical   + .5) + row;
 
 					G4double xPos = numXOffsets * xOffset;
-					G4double yPos = numYOffsets * yOffset;
-					G4double zPos = 0;//Crystallz * .5;
+					G4double yPos = 0;
+					G4double zPos = numZOffsets * zOffset;//Crystallz * .5;
 
 					G4ThreeVector crystalPos(xPos, yPos, zPos);
 
