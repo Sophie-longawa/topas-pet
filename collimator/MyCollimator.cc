@@ -81,19 +81,8 @@ G4VPhysicalVolume* MyCollimator::Construct() {
 
     G4cerr << "Found that HLX, HLY, HLZ = " << HLX << ' ' << HLY << ' ' << HLZ << '\n';
 
-    const G4double TransX = fPm->ParameterExists(GetFullParmName("TransX")) ?
-                            fPm->GetDoubleParameter(GetFullParmName("TransX"), "Length") : 0;
-    const G4double TransY = fPm->ParameterExists(GetFullParmName("TransY")) ?
-                            fPm->GetDoubleParameter(GetFullParmName("TransY"), "Length") : 0;
-    const G4double TransZ = fPm->ParameterExists(GetFullParmName("TransZ")) ?
-                            fPm->GetDoubleParameter(GetFullParmName("TransZ"), "Length") : 0;
-
-    const G4double RotX = fPm->ParameterExists(GetFullParmName("RotX")) ? 
-                          fPm->GetDoubleParameter(GetFullParmName("RotX"), "Angle") : 0;
-    const G4double RotY = fPm->ParameterExists(GetFullParmName("RotY")) ? 
-                          fPm->GetDoubleParameter(GetFullParmName("RotY"), "Angle") : 0;
-    const G4double RotZ = fPm->ParameterExists(GetFullParmName("RotZ")) ? 
-                          fPm->GetDoubleParameter(GetFullParmName("RotZ"), "Angle") : 0;
+    G4VSolid* DeletedBox = new G4Box("Deleted Box", HLXOfDummyBox, HLYOfDummyBox, HLZOfDummyBox);
+    G4LogicalVolume* DeletedBoxLogicalVolume = CreateLogicalVolume("Deleted Box Logical Volume", OpeningMaterial, DeletedBox);
     
     fEnvelopeLog = CreateLogicalVolume(fName, CollimatorMaterial, new G4Box(fName, HLX, HLY, HLZ));
     fEnvelopePhys = CreatePhysicalVolume(fEnvelopeLog);
@@ -103,18 +92,14 @@ G4VPhysicalVolume* MyCollimator::Construct() {
      *  shape and will have by default Air Material (as Jan suggested).
      */
 
-    G4VSolid* DeletedBox = new G4Box("Deleted Box", HLXOfDummyBox, HLYOfDummyBox, HLZOfDummyBox);
-    G4LogicalVolume* DeletedBoxLogicalVolume = CreateLogicalVolume("bullshit", OpeningMaterial, DeletedBox);
-    G4RotationMatrix* BoxRotations = new G4RotationMatrix(RotX, RotY, RotZ);
-
-    for (int i = 0;i < AxisXCuts;i++) {
+   for (int i = 0;i < AxisXCuts;i++) {
         const G4double XCenter = (2 * i + 1) * (HLX / AxisXCuts) - HLX;
         for (int j = 0;j < AxisYCuts;j++) {    
             const G4double YCenter = (2 * j + 1) * (HLY / AxisYCuts) - HLY;
             for (int k = 0;k < AxisZCuts;k++) {
                 const G4double ZCenter = (2 * k + 1) * (HLZ / AxisZCuts) - HLZ;
-                G4ThreeVector* BoxOffsets = new G4ThreeVector(TransX + XCenter, TransY + YCenter, TransZ + ZCenter);
-                CreatePhysicalVolume("Dummy opening", i * AxisYCuts * AxisZCuts + j * AxisZCuts + k, true, DeletedBoxLogicalVolume, BoxRotations, BoxOffsets, fEnvelopePhys);
+                G4ThreeVector* BoxOffsets = new G4ThreeVector(XCenter, YCenter, ZCenter);
+                CreatePhysicalVolume("Dummy opening", i * AxisYCuts * AxisZCuts + j * AxisZCuts + k, true, DeletedBoxLogicalVolume, 0, BoxOffsets, fEnvelopePhys);
             }
         }
     }
