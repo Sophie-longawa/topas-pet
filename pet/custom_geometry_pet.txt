@@ -1,6 +1,6 @@
 b:Ts/PauseBeforeQuit="True"
 i:Ts/NumberOfThreads = 2
-Ge/CheckForOverlaps = "False"
+Ge/CheckForOverlaps = "True"
 
 
 d:Ge/World/HLX       = 10. m
@@ -229,7 +229,7 @@ s:Ge/PETScanner/DrawingStyle       = "FullWireFrame"
 
 
 i:Ge/PETScanner/DetectorBlocksPerRing = 5
-i:Ge/PETScanner/Rings = 1
+i:Ge/PETScanner/Rings = 3
 i:Ge/PETScanner/CrystalsHorizontal = 8
 i:Ge/PETScanner/CrystalsVertical = 8
 d:Ge/PETScanner/MarginHorizontal = .5 mm

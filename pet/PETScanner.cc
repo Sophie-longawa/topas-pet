@@ -127,7 +127,7 @@ G4VPhysicalVolume* PETScanner::Construct()
 
 	G4double angleIncrement = M_PI * 2 / NbDetectorBlocksPerRing;
 
-	G4VSolid* encapuslatingTube = new G4Tubs("petScanner", ringRadius,    // inner radius
+	G4VSolid* encapuslatingTube = new G4Tubs("petScanner", 0,//ringRadius,    // inner radius
 											 (ringRadius + Crystally) * std::cos(M_PI/NbDetectorBlocksPerRing),    // outer radius
 											 (NbRings*.5 + .5) * (detectorHLZ * 2 + MarginRings) * 2,    // height
 											 0.0,  2 * M_PI);  // segment angles
@@ -156,32 +156,32 @@ G4VPhysicalVolume* PETScanner::Construct()
 
 		G4double detectorTransZ = (-NbRings*.5 + .5 + ring_index) * (detectorHLZ * 2 + MarginRings);
 
-		for(int detector_index = 0; detector_index < 1/*NbDetectorBlocksPerRing*/; detector_index++) {
+		for(int detector_index = 0; detector_index < NbDetectorBlocksPerRing; detector_index++) {
 
-			G4double detectorTransX = (ringRadius + detectorHLY) * (std::sin(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.sin(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
+			G4double detectorTransX = (ringRadius + detectorHLY) * (std::sin(-(M_PI * 2 * (detector_index*1.0 / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.sin(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
 			//y defined above
-			G4double detectorTransY = (ringRadius + detectorHLY) * (std::cos(-(M_PI * 2 * (detector_index / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.cos(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
+			G4double detectorTransY = (ringRadius + detectorHLY) * (std::cos(-(M_PI * 2 * (detector_index*1.0 / NbDetectorBlocksPerRing) + M_PI / 2)));//Ge/PETScannerRing/R mm * {math.cos(-(math.pi * 2 * (block_num/num_blocks) + math.pi / 2))}
 
-			G4double rotationAngle = M_PI * .5 + angleIncrement * detector_index;
+			G4double rotationAngle = -(M_PI * .5 + angleIncrement * detector_index);
 
-			G4RotationMatrix detectorRotation = G4RotationMatrix();
-			detectorRotation.rotateY(rotationAngle);
+			G4RotationMatrix* detectorRotation = new G4RotationMatrix();
+			detectorRotation->rotateZ(rotationAngle);
 
-			G4ThreeVector trans(detectorTransX, detectorTransY, detectorTransZ);
+			G4ThreeVector* trans = new G4ThreeVector(detectorTransX, detectorTransY, detectorTransZ);
 
 			G4cout << "Making detector: " << detectorNum << G4endl;
 
 			G4String detector_string = "detector"+G4UIcommand::ConvertToString(detectorNum);
 
-			G4VPhysicalVolume* detectorPV = CreatePhysicalVolume(detector_string, detectorNum++, true, detectorLV, &detectorRotation, &trans, fEnvelopePhys);
+			G4VPhysicalVolume* detectorPV = CreatePhysicalVolume(detector_string, detectorNum++, true, detectorLV, detectorRotation, trans, fEnvelopePhys);
 
 
-			for(int row = 0; row < 1/*NbCrystalsVertical*/; row++) {
-				for(int col = 0; col < 1/*NbCrystalsVertical*/; col++) {
+			for(int row = 0; row < NbCrystalsVertical; row++) {
+				for(int col = 0; col < NbCrystalsHorizontal; col++) {
 
 					//int n = sprintf (crystalNameBuffer, "%sr%dd%dr%dc%d", crystalName, ring_index, detector_index, row, col);
 
-					G4RotationMatrix crystalRotation = G4RotationMatrix();//no rotation
+					G4RotationMatrix* crystalRotation = new G4RotationMatrix();//no rotation
 
 					G4double xOffset = Crystallx + MarginHorizontal;
 					G4double zOffset = Crystallz + MarginVertical;
@@ -193,13 +193,14 @@ G4VPhysicalVolume* PETScanner::Construct()
 					G4double yPos = 0;
 					G4double zPos = numZOffsets * zOffset;//Crystallz * .5;
 
-					G4ThreeVector crystalPos(xPos, yPos, zPos);
+					G4ThreeVector* crystalPos = new G4ThreeVector(xPos, yPos, zPos);
 
 					G4cout << "Making crystal: " << crystalNum << G4endl;
+					G4cout << "Making crystal at: " << *crystalPos << G4endl;
 
 					G4String crystalVolName = "crystal"+G4UIcommand::ConvertToString(crystalNum);
 
-					CreatePhysicalVolume(crystalVolName, crystalNum++, true, crystalLV, &crystalRotation, &crystalPos, detectorPV);
+					CreatePhysicalVolume(crystalVolName, crystalNum++, true, crystalLV, crystalRotation, crystalPos, detectorPV);
 
 
 				}
