@@ -77,8 +77,6 @@ G4VPhysicalVolume* RingCollimator::Construct(void) {
     }
 */
     const G4double RingRadius = fPm->GetDoubleParameter(GetFullParmName("RingRadius"), "Length");
-    const G4double OffsetAngle = fPm->ParameterExists(GetFullParmName("OffsetAngle")) ? 
-                                 fPm->GetDoubleParameter(GetFullParmName("OffsetAngle"), "Angle") : 0;
     
     const G4int NbOfCollimators = fPm->GetIntegerParameter(GetFullParmName("NbOfCollimators"));
 
@@ -105,42 +103,24 @@ G4VPhysicalVolume* RingCollimator::Construct(void) {
     G4LogicalVolume* WholeBoxLogicalVolume = CreateLogicalVolume("Whole Box Logical Volume", CollimatorMaterial, WholeBox);
     G4LogicalVolume* DeletedBoxLogicalVolume = CreateLogicalVolume("Deletex Box Logical Volume", OpeningMaterial, DeletedBox);
 
-    const G4double BigBoxHL = fPm->GetDoubleParameter(GetFullParmName("BigBoxHL"), "Length");
-
-    G4VSolid* EmptyBox = new G4Box("Empty Box", BigBoxHL, BigBoxHL, BigBoxHL);
+    G4VSolid* EmptyTube = new G4Tubs("Empty Tube", 0, (RingRadius + HLZ), 2 * HLY, 0, 2 * M_PI);
     
-    fEnvelopeLog = CreateLogicalVolume("Empty Box", CollimatorMaterial, EmptyBox);
+    fEnvelopeLog = CreateLogicalVolume("Empty Tube", CollimatorMaterial, EmptyTube);
     fEnvelopePhys = CreatePhysicalVolume(fEnvelopeLog);
 
     for (int collimator = 0;collimator < NbOfCollimators;++collimator) {
-        const double Angle = 2 * M_PI * collimator / NbOfCollimators + OffsetAngle;
+        const double Angle = 2 * M_PI * collimator / NbOfCollimators;
         const G4double Trans1 = RingRadius * cos(Angle);
         const G4double Trans2 = RingRadius * sin(Angle);
 
-        G4double TransX, TransY, TransZ;
-
-        if (RingAxis == "X") {
-            TransX = 0;
-            TransY = Trans1;
-            TransZ = Trans2;
-        } else
-        if (RingAxis == "Y") {
-            TransX = Trans1;
-            TransY = 0;
-            TransZ = Trans2;
-        } else 
-        if (RingAxis == "Z") {
-            TransX = Trans1;
-            TransY = Trans2;
-            TransZ = 0;
-        }
+        G4double TransX(Trans1), TransY(Trans2), TransZ(0);
 
         const G4double RotationAngle = 0.5 * M_PI - Angle;
 
         G4RotationMatrix* RotMatrix = new G4RotationMatrix;
-        RotMatrix->rotateX(RingAxis != "X" ? 0 : RotationAngle);
-        RotMatrix->rotateY(RingAxis != "Y" ? 0 : RotationAngle);
-        RotMatrix->rotateZ(RingAxis != "Z" ? 0 : RotationAngle);
+        RotMatrix->rotateX(0);
+        RotMatrix->rotateY(0);
+        RotMatrix->rotateZ(RotationAngle);
 
         G4ThreeVector* TransVector = new G4ThreeVector(TransX, TransY, TransZ);
 

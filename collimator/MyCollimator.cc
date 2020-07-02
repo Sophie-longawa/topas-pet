@@ -104,7 +104,7 @@ G4VPhysicalVolume* MyCollimator::Construct() {
      */
 
     G4VSolid* DeletedBox = new G4Box("Deleted Box", HLXOfDummyBox, HLYOfDummyBox, HLZOfDummyBox);
-    G4LogicalVolume* DeletedBoxLogicalVolume = CreateLogicalVolume(ID, OpeningMaterial, DeletedBox);
+    G4LogicalVolume* DeletedBoxLogicalVolume = CreateLogicalVolume("bullshit", OpeningMaterial, DeletedBox);
     G4RotationMatrix* BoxRotations = new G4RotationMatrix(RotX, RotY, RotZ);
 
     for (int i = 0;i < AxisXCuts;i++) {
