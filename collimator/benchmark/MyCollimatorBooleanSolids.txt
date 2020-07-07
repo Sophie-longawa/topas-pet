@@ -1,4 +1,0 @@
-includeFile = MyCollimator.txt
-
-s:Ge/MyBox/Type = "MyCollimatorBooleanSolids"
-i:Ts/NumberOfThreads = 1
