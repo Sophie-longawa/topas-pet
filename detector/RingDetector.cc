@@ -89,7 +89,18 @@ G4VPhysicalVolume* RingDetector::Construct(void) {
 
     const bool CollimatorExists = DetectorType == "PET" ? false : true;
 
-    const G4int NbOfDetectors = fPm->GetIntegerParameter(GetFullParmName("NbOfDetectors"));
+    G4int NbOfDetectors = fPm->GetIntegerParameter(GetFullParmName("NbOfDetectors"));
+
+    if (NbOfDetectors < 0) {
+        NbOfDetectors = floor(M_PI / asin(HLX / RingRadius));
+        
+        G4cerr << "Infered that NbOfDetectors = " << NbOfDetectors << G4endl;
+    }
+
+    if (NbOfDetectors == 0) {
+        G4cout << "Error: NbOfDetectors should not be equal to 0 either implicitely or explicitely, see: " << GetFullParmName("NbOfDetectors") << G4endl;
+        exit(1);
+    }
 
     const G4double CollimatorHLY = CollimatorExists ? fPm->GetDoubleParameter(GetFullParmName("CollimatorHLY"), "Length") : 0;
 

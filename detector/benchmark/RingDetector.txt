@@ -22,8 +22,8 @@ s:Ge/MyBox/DetectorType = "SPECT"
 s:Ge/MyBox/Type = "RingDetector"
 s:Ge/MyBox/Parent = "World"
 s:Ge/MyBox/CrystallMaterial = "G4_Na"
-d:Ge/MyBox/HLX = 30 mm
-d:Ge/MyBox/HLZ = 30 mm
+d:Ge/MyBox/HLX = 35 mm
+d:Ge/MyBox/HLZ = 35 mm
 d:Ge/MyBox/CrystallHLY = 10 mm
 i:Ge/MyBox/AxisXCuts = 7
 i:Ge/MyBox/AxisZCuts = 9
@@ -41,7 +41,7 @@ u:Ge/MyBox/ThicknessAxisXPercentage = 0.3
 ###########################################
 
 d:Ge/MyBox/RingRadius = 140 mm
-i:Ge/MyBox/NbOfDetectors = 15
+i:Ge/MyBox/NbOfDetectors = -1
 
 b:Ge/CheckForOverlaps = "False"
 i:Ts/NumberOfThreads = -1
