@@ -1,0 +1,43 @@
+s:Gr/MyGraphic1/Type = "OpenGL"
+b:Ge/MyGraphic1/ShowAxis = "True"
+b:Ts/PauseBeforeQuit = "True"
+b:Ts/UseQt = "True"
+b:Gr/MyGraphic1/IncludeAxes = "True" # defaults to "False"
+s:Gr/MyGraphic1/AxesComponent = "World" # Component in which to center the axes. Defaults to World.
+d:Gr/MyGraphic1/AxesSize = 15. cm # size of axes
+
+i:So/Demo/NumberOfHistoriesInRun = 1
+s:So/Demo/Type = "Beam"
+s:So/Demo/Component = "BeamPosition"
+s:So/Demo/BeamParticle = "gamma"
+
+s:Ge/World/Material = "Air"
+s:Ge/World/Type = "TsBox"
+d:Ge/World/HLX = 25 cm
+d:Ge/World/HLY = 25 cm
+d:Ge/World/HLZ = 25 cm
+
+s:Ge/MyBox/Type = "MyDetector"
+s:Ge/MyBox/Parent = "World"
+s:Ge/MyBox/Material = "G4_Al"
+d:Ge/MyBox/HLX = 5 cm
+d:Ge/MyBox/HLY = 7.5 cm
+d:Ge/MyBox/HLZ = 20 cm
+i:Ge/MyBox/AxisYCuts = 4
+i:Ge/MyBox/AxisXCuts = 5
+u:Ge/MyBox/ThicknessAxisXPercentage = 0.7
+u:Ge/MyBox/ThicknessAxisYPercentage = 0.6
+d:Ge/MyBox/SmallHLX = 1.5 cm
+d:Ge/MyBox/SmallHLY = 0.9 cm
+d:Ge/MyBox/SmallHLZ = 1.2 cm
+
+s:Ge/MyScorerBox/Type = "TsBox"
+s:Ge/MyScorerBox/Parent = "World"
+s:Ge/MyScorerBox/Material = "G4_Na"
+d:Ge/MyScorerBox/HLX = 5 cm
+d:Ge/MyScorerBox/HLY = 7.5 cm
+d:Ge/MyScorerBox/HLZ = 0.1 cm
+d:Ge/MyScorerBox/TransZ = -20.5 cm
+
+b:Ge/CheckForOverlaps = "False"
+i:Ts/NumberOfThreads = -1

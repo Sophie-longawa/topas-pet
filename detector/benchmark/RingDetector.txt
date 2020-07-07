@@ -1,0 +1,47 @@
+s:Gr/MyGraphic1/Type = "OpenGL"
+b:Ge/MyGraphic1/ShowAxis = "True"
+b:Gr/MyGraphic1/IncludeAxes = "True" # defaults to "False"
+s:Gr/MyGraphic1/AxesComponent = "MyBox" # Component in which to center the axes. Defaults to World.
+d:Gr/MyGraphic1/AxesSize = 100. mm # size of axes
+b:Ts/PauseBeforeQuit = "True"
+b:Ts/UseQt = "True"
+
+i:So/Demo/NumberOfHistoriesInRun = 1
+s:So/Demo/Type = "Beam"
+s:So/Demo/Component = "BeamPosition"
+s:So/Demo/BeamParticle = "gamma"
+
+s:Ge/World/Material = "Air"
+s:Ge/World/Type = "TsBox"
+d:Ge/World/HLX = 250 mm
+d:Ge/World/HLY = 250 mm
+d:Ge/World/HLZ = 250 mm
+
+#Put here PET for a PET example
+s:Ge/MyBox/DetectorType = "SPECT"
+s:Ge/MyBox/Type = "RingDetector"
+s:Ge/MyBox/Parent = "World"
+s:Ge/MyBox/CrystallMaterial = "G4_Na"
+d:Ge/MyBox/HLX = 30 mm
+d:Ge/MyBox/HLZ = 30 mm
+d:Ge/MyBox/CrystallHLY = 10 mm
+i:Ge/MyBox/AxisXCuts = 7
+i:Ge/MyBox/AxisZCuts = 9
+
+##This one is not used but I am not sure it's required##
+s:Ge/MyBox/Material = "Air" 
+########################################################
+
+
+####Uncomment this part for PET example####
+s:Ge/MyBox/CollimatorMaterial = "G4_Al"
+d:Ge/MyBox/CollimatorHLY = 30 mm
+u:Ge/MyBox/ThicknessAxisZPercentage = 0.4
+u:Ge/MyBox/ThicknessAxisXPercentage = 0.3
+###########################################
+
+d:Ge/MyBox/RingRadius = 140 mm
+i:Ge/MyBox/NbOfDetectors = 15
+
+b:Ge/CheckForOverlaps = "False"
+i:Ts/NumberOfThreads = -1
