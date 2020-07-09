@@ -1,5 +1,5 @@
 b:Ts/PauseBeforeQuit="True"
-i:Ts/NumberOfThreads = 2
+i:Ts/NumberOfThreads = 1
 Ge/CheckForOverlaps = "True"
 
 
@@ -69,7 +69,7 @@ s:Ge/Phantom/Color = "Pink"
 #============Graphics=============================
 
 
-b:Gr/ViewA/Active = "True"
+b:Gr/ViewA/Active = "False"
 
 s:Gr/ViewA/Type                             = "OpenGL"
 i:Gr/ViewA/WindowSizeX                      = 1024
@@ -91,8 +91,8 @@ d:Gr/ViewA/AxesSize = 40. mm # size of axes
 
 
 d:Tf/TimelineStart = 0. s # defaults to zero
-d:Tf/TimelineEnd = 10000. ns # must be larger than TimelineStart
-i:Tf/NumberOfSequentialTimes = 10000 # defaults to 1
+d:Tf/TimelineEnd = 100000. ns # must be larger than TimelineStart
+i:Tf/NumberOfSequentialTimes = 100000 # defaults to 1
 
 s:Tf/coschange/Function            = "Linear"
 d:Tf/coschange/Rate                = .05 1/s
@@ -228,8 +228,8 @@ s:Ge/PETScanner/Color              = "Orange"
 s:Ge/PETScanner/DrawingStyle       = "FullWireFrame"
 
 
-i:Ge/PETScanner/DetectorBlocksPerRing = 5
-i:Ge/PETScanner/Rings = 3
+i:Ge/PETScanner/DetectorBlocksPerRing = 50
+i:Ge/PETScanner/Rings = 1
 i:Ge/PETScanner/CrystalsHorizontal = 8
 i:Ge/PETScanner/CrystalsVertical = 8
 d:Ge/PETScanner/MarginHorizontal = .5 mm
@@ -245,12 +245,12 @@ d:Ge/PETScanner/CrystalLZ = 4 mm
 
 
 
-#s:Sc/PETScore/Component = "PETScanner"
-#s:Sc/PETScore/Quantity = "PETScorer"
-#s:Sc/PETScore/IfOutputFileAlreadyExists = "Overwrite" # re-write
-#sv:Sc/PETScore/OnlyIncludeParticlesNamed = 1 "gamma"
+s:Sc/PETScore/Component = "PETScanner"
+s:Sc/PETScore/Quantity = "DigitizerScorer"
+s:Sc/PETScore/IfOutputFileAlreadyExists = "Overwrite" # re-write
+sv:Sc/PETScore/OnlyIncludeParticlesNamed = 1 "gamma"
 #i:Sc/PETScore/PhiBins = 360
-#s:Sc/PETScore/OutputType = "ASCII"
+s:Sc/PETScore/OutputType = "ASCII"
 
 
 
