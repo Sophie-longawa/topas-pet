@@ -30,28 +30,27 @@ G4VPhysicalVolume* RingDetector::Construct(void) {
 
     BeginConstruction();
 
+    const G4int XBins = fPm->ParameterExists(GetFullParmName("XBins")) ?
+                            fPm->GetIntegerParameter(GetFullParmName("XBins")) : 1;
+    const G4int YBins = fPm->ParameterExists(GetFullParmName("YBins")) ?
+                            fPm->GetIntegerParameter(GetFullParmName("YBins")) : 1;
+    const G4int ZBins = fPm->ParameterExists(GetFullParmName("ZBins")) ?
+                            fPm->GetIntegerParameter(GetFullParmName("ZBins")) : 1;
 
-    const G4int AxisXCuts = fPm->ParameterExists(GetFullParmName("AxisXCuts")) ?
-                            fPm->GetIntegerParameter(GetFullParmName("AxisXCuts")) : 1;
-    const G4int AxisYCuts = fPm->ParameterExists(GetFullParmName("AxisYCuts")) ?
-                            fPm->GetIntegerParameter(GetFullParmName("AxisYCuts")) : 1;
-    const G4int AxisZCuts = fPm->ParameterExists(GetFullParmName("AxisZCuts")) ?
-                            fPm->GetIntegerParameter(GetFullParmName("AxisZCuts")) : 1;
+    G4cerr << "The cuts are: " << XBins << ' ' << YBins << ' ' << ZBins << '\n';
 
-    G4cerr << "The cuts are: " << AxisXCuts << ' ' << AxisYCuts << ' ' << AxisZCuts << '\n';
-
-    if (AxisXCuts <= 0) {
-        G4cout << "Error: AxisXCuts should be a positive integer, see: " << GetFullParmName("AxisXCuts") << G4endl;
+    if (XBins <= 0) {
+        G4cout << "Error: AxisXCuts should be a positive integer, see: " << GetFullParmName("XBins") << G4endl;
         exit(1);
     }
 
-    if (AxisYCuts <= 0) {
-        G4cout << "Error: AxisYCuts should be a positive integer, see: " << GetFullParmName("AxisYCuts") << G4endl;
+    if (YBins <= 0) {
+        G4cout << "Error: AxisYCuts should be a positive integer, see: " << GetFullParmName("YBins") << G4endl;
         exit(1);
     }
 
-    if (AxisZCuts <= 0) {
-        G4cout << "Error: AxisZCuts should be a positive integer, see: " << GetFullParmName("AxisZCuts") << G4endl;
+    if (ZBins <= 0) {
+        G4cout << "Error: AxisZCuts should be a positive integer, see: " << GetFullParmName("ZBins") << G4endl;
         exit(1);
     }
 
@@ -65,18 +64,22 @@ G4VPhysicalVolume* RingDetector::Construct(void) {
      * The Y axis of the detector will represent the length of the detector
      * The X axis of the detector will be the axis tangent to the ring if
      * we ignoress the wideness of the tube so that the we can
-     * pass a line perpendicular to plane formed by axis X and Z
-     * formed by the radius RingAxis
+     * pass a line perpendicular of radiu RingRadiu to the plane formed 
+     * by axis X & Z
      *
      * The total length of the detector will be represent by both the length
      * of crystall and collimator (if present), i.e. it's equal to 
      * (CrystallHLY + CollimatorHLY) * 2
      *
      * Since both the crystall and detector will share surface of X & Z axis
-     * both of them will 
+     * both of them will share axis X & Z length
      * 
-     * To obtain a different rotations use the topas
+     * To obtain a different rotation configuration use the topas
      * RotX, RotY & RotZ
+     *
+     * If the number of detectors NbOfDetectors is set to -1, it will automatically
+     * infer the maximum number of detectors possible to align in the ring
+     * with fixed HLX & HLZ
      */
     
     const G4double HLX = fPm->GetDoubleParameter(GetFullParmName("HLX"), "Length");
@@ -116,18 +119,19 @@ G4VPhysicalVolume* RingDetector::Construct(void) {
     G4String OpeningMaterial = fPm->ParameterExists(GetFullParmName("OpeningMaterial")) ?
                                fPm->GetStringParameter(GetFullParmName("OpeningMaterial")) : fParentComponent->GetResolvedMaterialName();
 
-    G4String CollimatorMaterial = CollimatorExists ? fPm->GetStringParameter(GetFullParmName("CollimatorMaterial")) : OpeningMaterial; 
+    G4String CollimatorMaterial = CollimatorExists ? fPm->GetStringParameter(GetFullParmName("CollimatorMaterial")) : ""; 
                         //If collimator does not exist the we put a whatever material we want since we're not going to use the collimator
 
     G4String CrystallMaterial = fPm->GetStringParameter(GetFullParmName("CrystallMaterial"));
+    G4String TubeMaterial = fPm->GetStringParameter(GetFullParmName("Material"));
         
-    const G4double HLXOfOpening = (1 - ThicknessAxisXPercentage) * HLX / AxisXCuts;
-    const G4double HLYOfOpening = (1 - ThicknessAxisYPercentage) * CollimatorHLY / AxisYCuts;
-    const G4double HLZOfOpening = (1 - ThicknessAxisZPercentage) * HLZ / AxisZCuts;
+    const G4double HLXOfOpening = (1 - ThicknessAxisXPercentage) * HLX / XBins;
+    const G4double HLYOfOpening = (1 - ThicknessAxisYPercentage) * CollimatorHLY / YBins;
+    const G4double HLZOfOpening = (1 - ThicknessAxisZPercentage) * HLZ / ZBins;
 
-    const G4double CrystallBoxHLX = HLX / AxisXCuts;
+    const G4double CrystallBoxHLX = HLX / XBins;
     const G4double CrystallBoxHLY = CrystallHLY;
-    const G4double CrystallBoxHLZ = HLZ / AxisZCuts;
+    const G4double CrystallBoxHLZ = HLZ / ZBins;
 
     G4VSolid* CollimatorBox = CollimatorExists ? new G4Box("Collimator Box Solid", HLX, CollimatorHLY, HLZ) : NULL;
     G4VSolid* OpeningBox = CollimatorExists ? new G4Box("Opening Box Solid", HLXOfOpening, HLYOfOpening, HLZOfOpening) : NULL;
@@ -159,8 +163,8 @@ G4VPhysicalVolume* RingDetector::Construct(void) {
         OpeningBoxLogicalVolume->SetVisAttributes(yokeColor);
     }
     
-    G4VSolid* EmptyTube = new G4Tubs("Empty Tube Solid", 0, (RingRadius + 2 * CrystallHLY + 2 * CollimatorHLY), 2 * HLZ, 0, 2 * M_PI);
-    fEnvelopeLog = CreateLogicalVolume("Empty Tube Logical Volume", CollimatorMaterial, EmptyTube);
+    G4VSolid* EmptyTube = new G4Tubs("Ring Solid", 0, (RingRadius + 2 * CrystallHLY + 2 * CollimatorHLY), 2 * HLZ, 0, 2 * M_PI);
+    fEnvelopeLog = CreateLogicalVolume("Ring Logical Volume", TubeMaterial, EmptyTube);
     yokeColor = new G4VisAttributes(G4Colour(0, 0, 0));
     RegisterVisAtt(yokeColor); 
     fEnvelopeLog->SetVisAttributes(yokeColor);
@@ -189,12 +193,12 @@ G4VPhysicalVolume* RingDetector::Construct(void) {
             G4VPhysicalVolume* CurrentCollimator = CreatePhysicalVolume("Collimator Box Physical Volume", 
                                 collimator, true, CollimatorBoxLogicalVolume, RotMatrix, TransVector, fEnvelopePhys);
 
-            for (int i = 0;i < AxisXCuts;++i) {
-                const G4double XCenter = (2 * i + 1) * (HLX / AxisXCuts) - HLX;
-                for (int j = 0;j < AxisYCuts;++j) {
-                    const G4double YCenter = (2 * j + 1) * (CollimatorHLY / AxisYCuts) - CollimatorHLY;
-                    for (int k = 0;k < AxisZCuts;++k) {
-                        const G4double ZCenter = (2 * k + 1) * (HLZ / AxisZCuts) - HLZ;
+            for (int i = 0;i < XBins;++i) {
+                const G4double XCenter = (2 * i + 1) * (HLX / XBins) - HLX;
+                for (int j = 0;j < YBins;++j) {
+                    const G4double YCenter = (2 * j + 1) * (CollimatorHLY / YBins) - CollimatorHLY;
+                    for (int k = 0;k < ZBins;++k) {
+                        const G4double ZCenter = (2 * k + 1) * (HLZ / ZBins) - HLZ;
                         TransVector = new G4ThreeVector(XCenter, YCenter, ZCenter);
                         CreatePhysicalVolume("Opening Box Physical Volume", 
                                 openingID++, true, OpeningBoxLogicalVolume, 0, TransVector, CurrentCollimator);
@@ -223,10 +227,10 @@ G4VPhysicalVolume* RingDetector::Construct(void) {
                             crystall, true, CrystallLogicalVolume, RotMatrix, TransVector, fEnvelopePhys);
 
         int crystallBoxID = 0;
-        for (int i = 0;i < AxisXCuts;++i) {
-            const G4double XCenter = (2 * i + 1) * (HLX / AxisXCuts) - HLX;
-            for (int j = 0;j < AxisZCuts;++j) {
-                const G4double ZCenter = (2 * j + 1) * (HLZ / AxisZCuts) - HLZ;
+        for (int i = 0;i < XBins;++i) {
+            const G4double XCenter = (2 * i + 1) * (HLX / XBins) - HLX;
+            for (int j = 0;j < ZBins;++j) {
+                const G4double ZCenter = (2 * j + 1) * (HLZ / ZBins) - HLZ;
                 TransVector = new G4ThreeVector(XCenter, 0, ZCenter);
                 CreatePhysicalVolume("Crystall Box Physical Volume",
                             crystallBoxID++, true, CrystallBoxLogicalVolume, 0, TransVector, CurrentCrystall);

@@ -22,11 +22,11 @@ s:Ge/MyBox/DetectorType = "SPECT"
 s:Ge/MyBox/Type = "RingDetector"
 s:Ge/MyBox/Parent = "World"
 s:Ge/MyBox/CrystallMaterial = "G4_Na"
-d:Ge/MyBox/HLX = 35 mm
+d:Ge/MyBox/HLX = 25 mm
 d:Ge/MyBox/HLZ = 35 mm
 d:Ge/MyBox/CrystallHLY = 10 mm
-i:Ge/MyBox/AxisXCuts = 7
-i:Ge/MyBox/AxisZCuts = 9
+i:Ge/MyBox/XBins = 7
+i:Ge/MyBox/ZBins = 9
 
 ##This one is not used but I am not sure it's required##
 s:Ge/MyBox/Material = "Air" 
