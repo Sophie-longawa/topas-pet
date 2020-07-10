@@ -1,0 +1,91 @@
+s:Gr/ViewA/Type="OpenGL"
+Ts/PauseBeforeQuit="True"
+Ts/ShowHistoryCountAtInterval=100000
+
+s:Ge/World/Material="Air"
+d:Ge/World/HLX=1.0 m
+d:Ge/World/HLY=1 m
+d:Ge/World/HLZ=1 m
+
+#=============CONE BEAM===========
+
+s:So/Demo/BeamParticle="gamma"
+#gamma is a temporary placeholder until I add more beam information
+u:So/Demo/BeamEnergySpread=0
+s:So/Demo/BeamPositionCutoffShape= "Ellipse"
+d:So/Demo/BeamEnergy=250 keV
+i:So/Demo/NumberOfHistoriesInRun=100
+s:So/Demo/Type="Beam"
+s:So/Demo/Component="BeamPosition"
+s:So/Demo/BeamXYDistribution="Flat"
+d:So/Demo/BeamPositionCutoffX=2.0 cm
+d:So/Demo/BeamPositionCutoffY=2.0 cm
+d:So/Demo/BeamAngularCutoffX=15.0 deg
+d:So/Demo/BeamAngularCutoffY=15.0 deg
+s:So/Demo/BeamAngularDistribution="Flat"
+s:So/Demo/BeamPositionDistribution="Flat"
+
+#==============FLAT PANEL DETECTOR========
+#--------Scintillator-------
+
+sv:Ma/CsI/Components=2 "G4_Cs" "G4_I"
+d:Ma/CsI/Density=4.51 g/cm3
+d:Ma/CsI/MeanExcitationEnergy=553.1 eV
+uv:Ma/CsI/Fractions=2 0.511549 0.488451
+s:El/G4_Cs/Symbol="Cs"
+s:El/G4_I/Symbol="I"
+s:Ma/CsI/DefaultColor="pink"
+d:Ma/CsI/MinimimIonization = 5.05 MeV/cm
+d:Ma/CsI/CriticalEnergy=11.17 MeV
+
+s:Ge/Detector/Type="TsBox"
+s:Ge/Detector/Material="CsI"
+s:Ge/Detector/Parent="World"
+d:Ge/Detector/HLX=200 um
+d:Ge/Detector/HLY=60.0 cm
+d:Ge/Detector/HLZ=200 um
+d:Ge/Detector/TransZ=-80.0 cm
+b:Ge/QuitIfOverlapDetected="False"
+
+#----Thin Film Transistor-----
+
+s:Ge/TFT/Type="TsBox"
+s:Ge/TFT/Material = "G4_Si"
+s:Ge/TFT/Parent="Detector"
+d:Ge/TFT/HLX=200 um
+d:Ge/TFT/HLY=60.0 cm
+d:Ge/TFT/HLZ=200 um
+d:Ge/TFT/Transz=-1 cm
+s:Ge/TFT/Color = "green"
+
+#===============DOSE DEPOSITION======
+
+s:Sc/DoseToWater/Quantity="DoseToWater"
+s:Sc/DoseToWater/Component="Phantom"
+b:Sc/DoseToWater/OutputToConsole="True"
+s:Sc/DoseToWater/IfOutputFileAlreadyExists="Overwrite"
+s:Sc/MyScore/OutputFile="photon2"
+s:Sc/MyScore/OutputType = "csv"
+
+#================PHANTOM=========
+
+s:GE/Phantom/Type="TsBox"
+s:GE/Phantom/Parent="World"
+s:Ge/Phantom/Material="G4_WATER"
+d:GE/Phantom/HLX=40.0 cm
+d:GE/Phantom/HLY=40.0 cm
+d:GE/Phantom/HLZ=40.0 cm
+#d:GE/Phantom/TransZ=21.0 cm
+
+#s:Ge/MyBox/Type = "MyCollimator"
+#s:Ge/MyBox/Parent = "World"
+#s:Ge/MyBox/Material = "G4_Al"
+#d:Ge/MyBox/HLX = 5 cm
+#d:Ge/MyBox/HLY = 7.5 cm
+#d:Ge/MyBox/HLZ = 20 cm
+#i:Ge/MyBox/AxisYCuts = 300
+#i:Ge/MyBox/AxisXCuts = 300
+#u:Ge/MyBox/ThicknessAxisYPercentage = 0.1
+#d:Ge/MyBox/SmallHLX = 1.5 cm
+#d:Ge/MyBox/SmallHLY = 0.9 cm
+#d:Ge/MyBox/SmallHLZ = 1.2 cm
